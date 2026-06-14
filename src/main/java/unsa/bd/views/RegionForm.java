@@ -4,7 +4,6 @@ import unsa.bd.dao.RegionDAO;
 import unsa.bd.model.Region;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +11,6 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 
 public class RegionForm extends JFrame {
@@ -35,7 +33,6 @@ public class RegionForm extends JFrame {
     // Campos de texto
     private JTextField codField;
     private JTextField nomField;
-    private JTextField estRegField;
     private JComboBox<String> estRegFieldBox;
 
     // Botones
@@ -59,6 +56,7 @@ public class RegionForm extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.generateContent();
         this.generateButtonsAction();
+        this.generateTableAction();
         this.setVisible(true);
     }
 
@@ -138,7 +136,7 @@ public class RegionForm extends JFrame {
         c.gridx = 0; c.gridy = 2; c.weightx = 0.0; c.fill = GridBagConstraints.NONE;
         registerFormPanel.add(makeStyledLabel("Est. Reg.:"), c);
 
-        String[] opciones = {" ", "A", "I"};
+        String[] opciones = {"A", "I"};
         estRegFieldBox = makeStyledComboBox(opciones);
         setJComboBoxEditable(estRegFieldBox, false);
         c.gridx = 1; c.gridy = 2; c.weightx = 1.0; c.fill = GridBagConstraints.NONE;
@@ -216,12 +214,8 @@ public class RegionForm extends JFrame {
         return box;
     }
 
-    private void setJComboBoxEditable(JComboBox box, boolean editable) {
-        if (editable) {
-            box.setEnabled(true);
-        } else {
-            box.setEnabled(false);
-        }
+    private void setJComboBoxEditable(JComboBox<String> box, boolean editable) {
+        box.setEnabled(editable);
     }
 
     private JPanel getTablePanel() {
@@ -451,13 +445,36 @@ public class RegionForm extends JFrame {
     private void generateButtonsAction() {
         addButton.addActionListener(e -> {
             RegionDAO dao = new RegionDAO();
-            Region region = new Region(Integer.parseInt(codField.getText()), nomField.getText(), estRegField.getText());
+            Region region = new Region();
+            region.setRegNom(nomField.getText());
+            region.setRegEstReg(estRegFieldBox.getToolTipText());
             try {
                 dao.agregar(region);
-                JOptionPane.showMessageDialog(null, "Region agregada correctamente");
+                JOptionPane.showMessageDialog(null, "Region " + region.getRegNom() + " agregada correctamente");
                 refreshTable();
+                clearFields();
             } catch (Exception ex) {
-                throw new RuntimeException(ex);
+                JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar dato", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+    private void generateTableAction() {
+        tableRegion.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                if (e.getClickCount() == 2) {
+
+                    int row = tableRegion.getSelectedRow();
+                    if (row == -1) return;
+
+                    codField.setText(tableRegion.getValueAt(row, 0).toString());
+                    nomField.setText(tableRegion.getValueAt(row, 1).toString());
+
+                    String estado = tableRegion.getValueAt(row, 2).toString();
+                    estRegFieldBox.setSelectedItem(estado);
+                }
             }
         });
     }
@@ -465,7 +482,7 @@ public class RegionForm extends JFrame {
     private void clearFields() {
         nomField.setText("");
         codField.setText("");
-        estRegField.setText("");
+        estRegFieldBox.setSelectedItem("A");
         tableRegion.clearSelection();
     }
 
@@ -481,7 +498,7 @@ public class RegionForm extends JFrame {
         }
     }
 
-    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) {
         UIManager.put("ComboBox.disabledBackground", DISABLED);
         UIManager.put("ComboBox.disabledForeground", Color.BLACK);
 
