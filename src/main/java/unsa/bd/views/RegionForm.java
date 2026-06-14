@@ -49,6 +49,8 @@ public class RegionForm extends JFrame {
     private DefaultTableModel model;
     private JTable tableRegion;
 
+    private int carFlaAct = 0;
+
     public RegionForm() {
         this.setSize(600, 800);
         this.setTitle("Region - Formulario");
@@ -447,7 +449,7 @@ public class RegionForm extends JFrame {
             RegionDAO dao = new RegionDAO();
             Region region = new Region();
             region.setRegNom(nomField.getText());
-            region.setRegEstReg(estRegFieldBox.getToolTipText());
+            region.setRegEstReg(estRegFieldBox.getSelectedItem().toString());
             try {
                 dao.agregar(region);
                 JOptionPane.showMessageDialog(null, "Region " + region.getRegNom() + " agregada correctamente");
@@ -455,6 +457,43 @@ public class RegionForm extends JFrame {
                 clearFields();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar dato", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        modifyButton.addActionListener(e -> {
+            if (carFlaAct == 0) {
+                int row = tableRegion.getSelectedRow();
+
+                if (row == -1) {
+                    JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a modificar");
+                    return;
+                }
+
+                String cod = tableRegion.getValueAt(row, 0).toString();
+                String nom = tableRegion.getValueAt(row, 1).toString();
+                String estReg = tableRegion.getValueAt(row, 2).toString();
+
+                codField.setText(cod);
+                nomField.setText(nom);
+                estRegFieldBox.setSelectedItem(estReg);
+
+                carFlaAct = 1;
+            } else {
+                try {
+                    int cod = Integer.parseInt(codField.getText());
+                    String nom = nomField.getText();
+                    String estReg = estRegFieldBox.getSelectedItem().toString();
+
+                    RegionDAO dao = new RegionDAO();
+                    dao.modificar(new Region(cod, nom, estReg));
+                    JOptionPane.showMessageDialog(null, "El registro fue modificado correctamente");
+
+                    carFlaAct = 0;
+                    clearFields();
+                    refreshTable();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar el dato", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
