@@ -496,6 +496,11 @@ public class RegionForm extends JFrame {
                 }
             }
         });
+
+        cancelButton.addActionListener(e -> {
+            carFlaAct = 0;
+            clearFields();
+        });
     }
 
     private void generateTableAction() {
