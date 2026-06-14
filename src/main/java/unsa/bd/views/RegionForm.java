@@ -4,10 +4,15 @@ import unsa.bd.dao.RegionDAO;
 import unsa.bd.model.Region;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 public class RegionForm extends JFrame {
@@ -16,6 +21,7 @@ public class RegionForm extends JFrame {
     private static final Color BORDER = new Color(47, 52, 60);
     private static final Color TABLE_HEADER = new Color(51, 136, 224);
     private static final Color TABLE_SELECTION = new Color(126, 179, 245);
+    private static final Color DISABLED = new Color(0xE5E5E5);
 
     // Fuentes
     private static final Font HEADER_FONT = new Font("SansSerif", Font.BOLD, 25);
@@ -30,6 +36,7 @@ public class RegionForm extends JFrame {
     private JTextField codField;
     private JTextField nomField;
     private JTextField estRegField;
+    private JComboBox<String> estRegFieldBox;
 
     // Botones
     private JButton addButton;
@@ -115,6 +122,7 @@ public class RegionForm extends JFrame {
         registerFormPanel.add(makeStyledLabel("Código:"), c);
 
         codField = makeStyledField(10);
+        setFieldEditable(codField, false);
         c.gridx = 1; c.gridy = 0; c.weightx = 1.0; c.fill = GridBagConstraints.NONE;
         registerFormPanel.add(codField, c);
 
@@ -123,8 +131,6 @@ public class RegionForm extends JFrame {
         registerFormPanel.add(makeStyledLabel("Nombre:"), c);
 
         nomField = makeStyledField(0);
-        nomField.setText("HOla");
-        nomField.setEditable(false);
         c.gridx = 1; c.gridy = 1; c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
         registerFormPanel.add(nomField, c);
 
@@ -132,9 +138,11 @@ public class RegionForm extends JFrame {
         c.gridx = 0; c.gridy = 2; c.weightx = 0.0; c.fill = GridBagConstraints.NONE;
         registerFormPanel.add(makeStyledLabel("Est. Reg.:"), c);
 
-        estRegField = makeStyledField(5);
+        String[] opciones = {" ", "A", "I"};
+        estRegFieldBox = makeStyledComboBox(opciones);
+        setJComboBoxEditable(estRegFieldBox, false);
         c.gridx = 1; c.gridy = 2; c.weightx = 1.0; c.fill = GridBagConstraints.NONE;
-        registerFormPanel.add(estRegField, c);
+        registerFormPanel.add(estRegFieldBox, c);
 
         registerPanel.add(registerFormPanel, BorderLayout.CENTER);
         return registerPanel;
@@ -159,6 +167,63 @@ public class RegionForm extends JFrame {
         return field;
     }
 
+    private void setFieldEditable(JTextField field, boolean editable) {
+        if (editable) {
+            field.setEditable(true);
+            field.setBackground(Color.WHITE);
+        } else {
+            field.setEditable(false);
+            field.setFocusable(false);
+            field.setBackground(DISABLED);
+        }
+    }
+
+    private JComboBox<String> makeStyledComboBox(String[] opciones) {
+        JComboBox<String> box = new JComboBox<>(opciones);
+
+        box.setUI(new BasicComboBoxUI() {
+            @Override
+            public void paintCurrentValueBackground(Graphics g, Rectangle bounds, boolean hasFocus) {
+                g.setColor(Color.WHITE); // fondo limpio siempre
+                g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+            }
+        });
+
+        box.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list, Object value, int index,
+                    boolean isSelected, boolean cellHasFocus) {
+
+                JLabel label = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, cellHasFocus);
+
+                label.setFont(FIELD_FONT);
+                label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                label.setOpaque(true);
+
+                label.setBackground(isSelected ? TABLE_SELECTION : Color.WHITE);
+
+                return label;
+            }
+        });
+
+        box.setFont(FIELD_FONT);
+        box.setOpaque(true);
+        box.setBackground(Color.WHITE);
+        box.setBorder(BorderFactory.createLineBorder(BORDER, 1, true));
+        box.setPreferredSize(new Dimension(100, 32));
+        return box;
+    }
+
+    private void setJComboBoxEditable(JComboBox box, boolean editable) {
+        if (editable) {
+            box.setEnabled(true);
+        } else {
+            box.setEnabled(false);
+        }
+    }
+
     private JPanel getTablePanel() {
         JPanel tablePanel = getStyledSectionPanel();
         tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -178,11 +243,9 @@ public class RegionForm extends JFrame {
         model.addColumn("Est. Reg.");
 
         getTableData(model);
-
         tableRegion = getJTable(model);
 
         JTableHeader tableHeader = tableRegion.getTableHeader();
-
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
 
             @Override
@@ -399,7 +462,14 @@ public class RegionForm extends JFrame {
         });
     }
 
-    public void refreshTable() {
+    private void clearFields() {
+        nomField.setText("");
+        codField.setText("");
+        estRegField.setText("");
+        tableRegion.clearSelection();
+    }
+
+    private void refreshTable() {
         model.setRowCount(0);
         getTableData(model);
 
@@ -411,7 +481,10 @@ public class RegionForm extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        UIManager.put("ComboBox.disabledBackground", DISABLED);
+        UIManager.put("ComboBox.disabledForeground", Color.BLACK);
+
         new RegionForm();
     }
 }
