@@ -54,17 +54,12 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm("Provincia")));
         addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("Distrito")));
         addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("Departamento")));
-        addItem(sidebar, "Tipo de acción", () -> openFrame(new AccionForm("Banco")));
-        addItem(sidebar, "Cargo", () -> openFrame(placeholder("Moneda")));
+        addItem(sidebar, "Accion", () -> openFrame(new AccionForm("Banco")));
+        addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("HOlak")));
         addItem(sidebar, "Clasificación Producto", () -> openFrame(new ClasificacionProductoForm("Clasificacion")));
         addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm("Estado factura")));
         addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm("Estado pedido")));
         addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm("Escala credito")));
-        addItem(sidebar, "Rol Usuario", () -> openFrame(placeholder("Estado Civil")));
-        addItem(sidebar, "Tipo Cliente", () -> openFrame(placeholder("Tipo Documento")));
-        addItem(sidebar, "Tipo Documento", () -> openFrame(placeholder("Tipo Documento")));
-        addItem(sidebar, "Tipo Factura", () -> openFrame(placeholder("Tipo Documento")));
-        addItem(sidebar, "Unidad Medida", () -> openFrame(placeholder("Tipo Documento")));
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
