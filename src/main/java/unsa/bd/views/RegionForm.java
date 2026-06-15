@@ -20,6 +20,7 @@ public class RegionForm extends JFrame {
     private static final Color TABLE_HEADER = new Color(51, 136, 224);
     private static final Color TABLE_SELECTION = new Color(126, 179, 245);
     private static final Color DISABLED = new Color(0xE5E5E5);
+    private static final Color BUTTON_SELECTED = new Color(255, 31, 31);
 
     // Fuentes
     private static final Font HEADER_FONT = new Font("SansSerif", Font.BOLD, 25);
@@ -33,7 +34,7 @@ public class RegionForm extends JFrame {
     // Campos de texto
     private JTextField codField;
     private JTextField nomField;
-    private JComboBox<String> estRegFieldBox;
+    private JTextField estRegField;
 
     // Botones
     private JButton addButton;
@@ -49,7 +50,9 @@ public class RegionForm extends JFrame {
     private DefaultTableModel model;
     private JTable tableRegion;
 
+    // Logica
     private int carFlaAct = 0;
+    private String modo = "MODO";
 
     public RegionForm() {
         this.setSize(600, 800);
@@ -61,7 +64,6 @@ public class RegionForm extends JFrame {
         this.generateTableAction();
         this.setVisible(true);
     }
-
 
     private void generateContent() {
         JPanel mainPanel = new JPanel(new BorderLayout(0, 10));
@@ -131,6 +133,7 @@ public class RegionForm extends JFrame {
         registerFormPanel.add(makeStyledLabel("Nombre:"), c);
 
         nomField = makeStyledField(0);
+        setFieldEditable(nomField, false);
         c.gridx = 1; c.gridy = 1; c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
         registerFormPanel.add(nomField, c);
 
@@ -138,11 +141,10 @@ public class RegionForm extends JFrame {
         c.gridx = 0; c.gridy = 2; c.weightx = 0.0; c.fill = GridBagConstraints.NONE;
         registerFormPanel.add(makeStyledLabel("Est. Reg.:"), c);
 
-        String[] opciones = {"A", "I"};
-        estRegFieldBox = makeStyledComboBox(opciones);
-        setJComboBoxEditable(estRegFieldBox, false);
+        estRegField = makeStyledField(5);
+        setFieldEditable(estRegField, false);
         c.gridx = 1; c.gridy = 2; c.weightx = 1.0; c.fill = GridBagConstraints.NONE;
-        registerFormPanel.add(estRegFieldBox, c);
+        registerFormPanel.add(estRegField, c);
 
         registerPanel.add(registerFormPanel, BorderLayout.CENTER);
         return registerPanel;
@@ -170,6 +172,7 @@ public class RegionForm extends JFrame {
     private void setFieldEditable(JTextField field, boolean editable) {
         if (editable) {
             field.setEditable(true);
+            field.setFocusable(true);
             field.setBackground(Color.WHITE);
         } else {
             field.setEditable(false);
@@ -401,8 +404,6 @@ public class RegionForm extends JFrame {
     }
 
     private JButton makeButton(String text) {
-        Color bgColor = TABLE_HEADER;
-
         JButton btn = new JButton(text) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -413,14 +414,16 @@ public class RegionForm extends JFrame {
                         RenderingHints.VALUE_ANTIALIAS_ON
                 );
 
+                Color baseColor = getBackground();
+
                 Color currentColor;
 
                 if (getModel().isPressed()) {
-                    currentColor = bgColor.darker();
+                    currentColor = baseColor.darker();
                 } else if (getModel().isRollover()) {
-                    currentColor = bgColor.brighter();
+                    currentColor = baseColor.brighter();
                 } else {
-                    currentColor = bgColor;
+                    currentColor = baseColor;
                 }
 
                 g2.setColor(currentColor);
@@ -434,6 +437,7 @@ public class RegionForm extends JFrame {
         }};
 
         btn.setFont(BUTTON_FONT);
+        btn.setBackground(TABLE_HEADER);
         btn.setForeground(Color.WHITE);
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
@@ -445,25 +449,26 @@ public class RegionForm extends JFrame {
     }
 
     private void generateButtonsAction() {
+
+        // Accion de agregar
         addButton.addActionListener(e -> {
-            RegionDAO dao = new RegionDAO();
-            Region region = new Region();
-            region.setRegNom(nomField.getText());
-            region.setRegEstReg(estRegFieldBox.getSelectedItem().toString());
-            try {
-                dao.agregar(region);
-                JOptionPane.showMessageDialog(null, "Region " + region.getRegNom() + " agregada correctamente");
-                refreshTable();
-                clearFields();
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar dato", "Error", JOptionPane.ERROR_MESSAGE);
+            if (carFlaAct == 0) {
+                setFieldEditable(nomField, true);
+                estRegField.setText("A");
+
+                carFlaAct = 1;
+                modo = "ADD";
+                addButton.setBackground(BUTTON_SELECTED);
+            } else {
+                JOptionPane.showMessageDialog(null, "Cancele la operación actual para cambiar a otra");
             }
         });
 
+        // Accion de modificar
         modifyButton.addActionListener(e -> {
+
             if (carFlaAct == 0) {
                 int row = tableRegion.getSelectedRow();
-
                 if (row == -1) {
                     JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a modificar");
                     return;
@@ -472,34 +477,172 @@ public class RegionForm extends JFrame {
                 String cod = tableRegion.getValueAt(row, 0).toString();
                 String nom = tableRegion.getValueAt(row, 1).toString();
                 String estReg = tableRegion.getValueAt(row, 2).toString();
-
                 codField.setText(cod);
                 nomField.setText(nom);
-                estRegFieldBox.setSelectedItem(estReg);
-
+                estRegField.setText(estReg);
+                setFieldEditable(nomField, true);
                 carFlaAct = 1;
+                modo = "MODIFY";
+                modifyButton.setBackground(BUTTON_SELECTED);
             } else {
-                try {
-                    int cod = Integer.parseInt(codField.getText());
-                    String nom = nomField.getText();
-                    String estReg = estRegFieldBox.getSelectedItem().toString();
-
-                    RegionDAO dao = new RegionDAO();
-                    dao.modificar(new Region(cod, nom, estReg));
-                    JOptionPane.showMessageDialog(null, "El registro fue modificado correctamente");
-
-                    carFlaAct = 0;
-                    clearFields();
-                    refreshTable();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar el dato", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(null, "Cancele la operación actual para cambiar a otra");
             }
         });
 
+        // Accion de eliminar
+        deleteButton.addActionListener(e -> {
+            if (carFlaAct == 0) {
+                int row = tableRegion.getSelectedRow();
+                if (row == -1) {
+                    JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a modificar");
+                    return;
+                }
+
+                String cod = tableRegion.getValueAt(row, 0).toString();
+                String nom = tableRegion.getValueAt(row, 1).toString();
+                String estReg = tableRegion.getValueAt(row, 2).toString();
+                codField.setText(cod);
+                nomField.setText(nom);
+                estRegField.setText(estReg);
+                carFlaAct = 1;
+                modo = "DELETE";
+                deleteButton.setBackground(BUTTON_SELECTED);
+            } else {
+                JOptionPane.showMessageDialog(null, "Cancele la operación actual para cambiar a otra");
+            }
+        });
+
+        // Accion inactivar
+        inactiveButton.addActionListener(e -> {
+            if (carFlaAct == 0) {
+                int row = tableRegion.getSelectedRow();
+                if (row == -1) {
+                    JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a inactivar");
+                    return;
+                }
+
+                String cod = tableRegion.getValueAt(row, 0).toString();
+                String nom = tableRegion.getValueAt(row, 1).toString();
+                String estReg = tableRegion.getValueAt(row, 2).toString();
+                codField.setText(cod);
+                nomField.setText(nom);
+                estRegField.setText(estReg);
+                carFlaAct = 1;
+                modo = "INACTIVATE";
+                inactiveButton.setBackground(BUTTON_SELECTED);
+            } else {
+                JOptionPane.showMessageDialog(null, "Cancele la operación actual para cambiar a otra");
+            }
+        });
+
+        // Accion reactivar
+        reactiveButton.addActionListener(e -> {
+            if (carFlaAct == 0) {
+                int row = tableRegion.getSelectedRow();
+                if (row == -1) {
+                    JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a reactivar");
+                    return;
+                }
+
+                String cod = tableRegion.getValueAt(row, 0).toString();
+                String nom = tableRegion.getValueAt(row, 1).toString();
+                String estReg = tableRegion.getValueAt(row, 2).toString();
+                codField.setText(cod);
+                nomField.setText(nom);
+                estRegField.setText(estReg);
+                carFlaAct = 1;
+                modo = "REACTIVATE";
+                reactiveButton.setBackground(BUTTON_SELECTED);
+            } else {
+                JOptionPane.showMessageDialog(null, "Cancele la operación actual para cambiar a otra");
+            }
+        });
+
+        // Accion cancelar
         cancelButton.addActionListener(e -> {
+            switch(modo) {
+                case "ADD" -> addButton.setBackground(TABLE_HEADER);
+                case "MODIFY" -> modifyButton.setBackground(TABLE_HEADER);
+                case "DELETE" -> deleteButton.setBackground(TABLE_HEADER);
+                case "INACTIVATE" -> inactiveButton.setBackground(TABLE_HEADER);
+                case "REACTIVATE" -> reactiveButton.setBackground(TABLE_HEADER);
+            }
+
             carFlaAct = 0;
             clearFields();
+            setFieldsNotEditable();
+        });
+
+        // Accion actualizar
+        updateButton.addActionListener(e -> {
+            if (carFlaAct == 0) {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún comando");
+                return;
+            }
+
+            int cod = codField.getText().isEmpty() ? 0 : Integer.parseInt(codField.getText());
+            String nom = nomField.getText();
+            String estReg = estRegField.getText();
+
+            Region region = new Region(cod, nom, estReg);
+            try {
+                RegionDAO dao = new RegionDAO();
+                switch (modo) {
+                    case "ADD": {
+                        dao.agregar(region);
+                        JOptionPane.showMessageDialog(null, "Registro agregado correctamente", "Agregación de Registro", JOptionPane.INFORMATION_MESSAGE);
+                        addButton.setBackground(TABLE_HEADER);
+                        refreshTable(true);
+                        clearFields();
+                        break;
+                    }
+                    case "MODIFY": {
+                        dao.modificar(new Region(cod, nom, estReg));
+                        JOptionPane.showMessageDialog(null, "El registro fue modificado correctamente", "Modificación de Registro", JOptionPane.INFORMATION_MESSAGE);
+                        modifyButton.setBackground(TABLE_HEADER);
+                        refreshTable(false);
+                        clearFields();
+                        break;
+                    }
+                    case "DELETE": {
+                        dao.eliminar(region.getRegCod());
+                        JOptionPane.showMessageDialog(null, "El registro fue marcado como eliminado correctamente", "Eliminación de Registro", JOptionPane.INFORMATION_MESSAGE);
+                        deleteButton.setBackground(TABLE_HEADER);
+                        refreshTable(false);
+                        clearFields();
+                        break;
+                    }
+                    case "INACTIVATE": {
+                        dao.inactivar(region.getRegCod());
+                        JOptionPane.showMessageDialog(null, "El registro fue marcado como inactivado correctamente", "Inactivación de Registro", JOptionPane.INFORMATION_MESSAGE);
+                        inactiveButton.setBackground(TABLE_HEADER);
+                        refreshTable(false);
+                        clearFields();
+                        break;
+                    }
+                    case "REACTIVATE": {
+                        dao.reactivar(region.getRegCod());
+                        JOptionPane.showMessageDialog(null, "El registro fue marcado como activado correctamente", "Inactivación de Registro", JOptionPane.INFORMATION_MESSAGE);
+                        reactiveButton.setBackground(TABLE_HEADER);
+                        refreshTable(false);
+                        clearFields();
+                    }
+                    default: {
+                        JOptionPane.showMessageDialog(null, "Operacion no implementada");
+                        clearFields();
+                    }
+
+                }
+                carFlaAct = 0;
+                setFieldsNotEditable();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Ocurrio al actualizar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        // Accion salir
+        exitButton.addActionListener(e -> {
+            System.exit(0);
         });
     }
 
@@ -515,9 +658,7 @@ public class RegionForm extends JFrame {
 
                     codField.setText(tableRegion.getValueAt(row, 0).toString());
                     nomField.setText(tableRegion.getValueAt(row, 1).toString());
-
-                    String estado = tableRegion.getValueAt(row, 2).toString();
-                    estRegFieldBox.setSelectedItem(estado);
+                    estRegField.setText(tableRegion.getValueAt(row, 2).toString());
                 }
             }
         });
@@ -526,19 +667,28 @@ public class RegionForm extends JFrame {
     private void clearFields() {
         nomField.setText("");
         codField.setText("");
-        estRegFieldBox.setSelectedItem("A");
+        estRegField.setText("");
         tableRegion.clearSelection();
     }
 
-    private void refreshTable() {
+    private void setFieldsNotEditable() {
+        setFieldEditable(nomField, false);
+        setFieldEditable(codField, false);
+        setFieldEditable(estRegField, false);
+    }
+
+    private void refreshTable(boolean toFinal) {
         model.setRowCount(0);
         getTableData(model);
 
-        int lastRow = model.getRowCount() - 1;
-        if (lastRow >= 0) {
-            tableRegion.scrollRectToVisible(
-                    tableRegion.getCellRect(lastRow, 0, true)
-            );
+        if (toFinal) {
+            int lastRow = model.getRowCount() - 1;
+
+            if (lastRow >= 0) {
+                tableRegion.scrollRectToVisible(
+                        tableRegion.getCellRect(lastRow, 0, true)
+                );
+            }
         }
     }
 
