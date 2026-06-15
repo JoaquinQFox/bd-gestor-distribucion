@@ -23,7 +23,7 @@ public class EstadoPedidoDAO {
 
     public void modificar(EstadoPedido estPed) throws Exception {
         String sql = """
-                UPDATE "ESTADO_PEDIDO" SET "EstPedNom" = ? WHERE "EstPedCod" = ?""";
+                UPDATE "ESTADO_PEDIDO" SET "EstPedNom" = ? WHERE "EstPedcod" = ?""";
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, estPed.getEstPedNom());
@@ -34,7 +34,7 @@ public class EstadoPedidoDAO {
 
     public void eliminar(int estPedCod) throws Exception {
         String sql = """
-                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = '*' WHERE "EstPedCod" = ?""";
+                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = '*' WHERE "EstPedcod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, estPedCod);
@@ -44,7 +44,7 @@ public class EstadoPedidoDAO {
 
     public void inactivar(int estPedCod) throws Exception {
         String sql = """
-                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = 'I' WHERE "EstPedCod" = ?""";
+                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = 'I' WHERE "EstPedcod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, estPedCod);
@@ -54,7 +54,7 @@ public class EstadoPedidoDAO {
 
     public void reactivar(int estPedCod) throws Exception {
         String sql = """
-                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = 'A' WHERE "EstPedCod" = ?""";
+                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = 'A' WHERE "EstPedcod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, estPedCod);
@@ -65,7 +65,7 @@ public class EstadoPedidoDAO {
     public List<EstadoPedido> listarTodo() throws Exception {
         List<EstadoPedido> lista = new ArrayList<>();
         String sql = """
-                SELECT "EstPedCod", "EstPedNom", "EstPedEstReg" FROM "ESTADO_PEDIDO" ORDER BY "EstPedCod" ASC""";
+                SELECT "EstPedcod", "EstPedNom", "EstPedEstReg" FROM "ESTADO_PEDIDO" ORDER BY "EstPedcod" ASC""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -78,5 +78,13 @@ public class EstadoPedidoDAO {
             }
         }
         return lista;
+    }
+
+    public static void main(String[] args) throws Exception {
+        EstadoPedidoDAO dao = new EstadoPedidoDAO();
+        List<EstadoPedido> list = dao.listarTodo();
+        for (EstadoPedido e : list) {
+            System.out.println(e);
+        }
     }
 }
