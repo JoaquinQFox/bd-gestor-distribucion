@@ -1,4 +1,4 @@
-package unsa.bd.views;
+package unsa.bd.views.forms;
 
 import unsa.bd.dao.RegionDAO;
 import unsa.bd.model.Region;
@@ -9,11 +9,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class RegionForm extends JFrame {
+public class RegionForm extends JInternalFrame {
     // Colores
     private static final Color FONDO = new Color(248, 250, 252);
     private static final Color BORDER = new Color(47, 52, 60);
@@ -54,14 +52,21 @@ public class RegionForm extends JFrame {
     private int carFlaAct = 0;
     private String modo = "MODO";
 
-    public RegionForm() {
+    public RegionForm(String title) {
+        this.setTitle(title);
+        this.setClosable(true);
+        this.setMaximizable(true);
+        this.setIconifiable(true);
         this.setSize(600, 800);
-        this.setTitle("Region - Formulario");
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        try {
+            this.setMaximum(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
+
         this.generateContent();
         this.generateButtonsAction();
-        this.generateTableAction();
+
         this.setVisible(true);
     }
 
@@ -642,25 +647,7 @@ public class RegionForm extends JFrame {
 
         // Accion salir
         exitButton.addActionListener(e -> {
-            System.exit(0);
-        });
-    }
-
-    private void generateTableAction() {
-        tableRegion.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-                if (e.getClickCount() == 2) {
-
-                    int row = tableRegion.getSelectedRow();
-                    if (row == -1) return;
-
-                    codField.setText(tableRegion.getValueAt(row, 0).toString());
-                    nomField.setText(tableRegion.getValueAt(row, 1).toString());
-                    estRegField.setText(tableRegion.getValueAt(row, 2).toString());
-                }
-            }
+            dispose();
         });
     }
 
@@ -696,6 +683,6 @@ public class RegionForm extends JFrame {
         UIManager.put("ComboBox.disabledBackground", DISABLED);
         UIManager.put("ComboBox.disabledForeground", Color.BLACK);
 
-        new RegionForm();
+        new RegionForm("HOla");
     }
 }
