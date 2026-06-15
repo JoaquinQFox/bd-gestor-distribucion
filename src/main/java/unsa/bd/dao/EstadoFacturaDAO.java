@@ -16,7 +16,7 @@ public class EstadoFacturaDAO {
                 INSERT INTO "ESTADO_FACTURA" ("EstFacNom", "EstFacEstReg") VALUES (?, 'A')""";
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, estFac.getEstFacNom());
+            ps.setString(1, estFac.getEstFacNom());
             ps.executeUpdate();
         }
     }
@@ -26,7 +26,7 @@ public class EstadoFacturaDAO {
                 UPDATE "ESTADO_FACTURA" SET "EstFacNom" = ? WHERE "EstFacCod" = ?""";
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, estFac.getEstFacNom());
+            ps.setString(1, estFac.getEstFacNom());
             ps.setInt(2, estFac.getEstFacCod());
             ps.executeUpdate();
         }
@@ -72,7 +72,7 @@ public class EstadoFacturaDAO {
             while (rs.next()) {
                 EstadoFactura e = new EstadoFactura();
                 e.setEstFacCod(rs.getInt("EstFacCod"));
-                e.setEstFacNom(rs.getInt("EstFacNom"));
+                e.setEstFacNom(rs.getString("EstFacNom"));
                 e.setEstFacEstReg(rs.getString("EstFacEstReg"));
                 lista.add(e);
             }
