@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
 
+    private static final Color DISABLED = new Color(0xE5E5E5);
     private static final Color BLUE       = new Color(51, 136, 224);
     private static final Color BLUE_DARK  = new Color(35, 100, 180);
     private static final Color FONDO      = new Color(248, 250, 252);
@@ -124,6 +125,8 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
+        UIManager.put("ComboBox.disabledBackground", DISABLED);
+        UIManager.put("ComboBox.disabledForeground", Color.BLACK);
         new MainFrame();
     }
 }
