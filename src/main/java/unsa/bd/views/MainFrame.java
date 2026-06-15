@@ -51,10 +51,10 @@ public class MainFrame extends JFrame {
         sidebar.add(Box.createVerticalStrut(8));
 
         addItem(sidebar, "Región", () -> openFrame(new RegionForm("Región")));
-        addItem(sidebar, "Ciudad", () -> openFrame(placeholder("Provincia")));
-        addItem(sidebar, "Departamento", () -> openFrame(placeholder("Distrito")));
-        addItem(sidebar, "Cargo", () -> openFrame(placeholder("Departamento")));
-        addItem(sidebar, "Tipo de acción", () -> openFrame(placeholder("Banco")));
+        addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm("Provincia")));
+        addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("Distrito")));
+        addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("Departamento")));
+        addItem(sidebar, "Tipo de acción", () -> openFrame(new AccionForm("Banco")));
         addItem(sidebar, "Cargo", () -> openFrame(placeholder("Moneda")));
         addItem(sidebar, "Clasificación Producto", () -> openFrame(new ClasificacionProductoForm("Clasificacion")));
         addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm("Estado factura")));
