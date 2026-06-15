@@ -86,7 +86,7 @@ public class EstadoPedidoForm extends JInternalFrame {
         titlePanel.setBackground(TABLE_HEADER);
         titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel titleLabel = new JLabel("REGIÓN");
+        JLabel titleLabel = new JLabel("ESTADO PEDIDO");
         titleLabel.setFont(HEADER_FONT);
         titleLabel.setForeground(Color.WHITE);
         titlePanel.add(titleLabel);
