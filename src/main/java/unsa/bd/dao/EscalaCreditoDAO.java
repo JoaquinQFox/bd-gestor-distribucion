@@ -83,4 +83,10 @@ public class EscalaCreditoDAO {
         }
         return lista;
     }
+
+    public static void main(String[] args) throws Exception {
+        EscalaCreditoDAO dao = new EscalaCreditoDAO();
+        EscalaCredito esc = new EscalaCredito(0, "Nombre", new BigDecimal("100.00"), "A");
+        dao.agregar(esc);
+    }
 }

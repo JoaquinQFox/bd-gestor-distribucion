@@ -1,7 +1,7 @@
 package unsa.bd.views.forms;
 
-import unsa.bd.dao.RegionDAO;
-import unsa.bd.model.Region;
+import unsa.bd.dao.EscalaCreditoDAO;
+import unsa.bd.model.EscalaCredito;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -9,9 +9,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.List;
 
-public class RegionForm extends JInternalFrame {
+public class EscalaCreditoForm extends JInternalFrame {
     // Colores
     private static final Color FONDO = new Color(248, 250, 252);
     private static final Color BORDER = new Color(47, 52, 60);
@@ -32,6 +33,7 @@ public class RegionForm extends JInternalFrame {
     // Campos de texto
     private JTextField codField;
     private JTextField nomField;
+    private JTextField limCreField;
     private JTextField estRegField;
 
     // Botones
@@ -46,13 +48,13 @@ public class RegionForm extends JInternalFrame {
 
     // Tabla
     private DefaultTableModel model;
-    private JTable tableRegion;
+    private JTable table;
 
     // Logica
     private int carFlaAct = 0;
     private String modo = "MODO";
 
-    public RegionForm(String title) {
+    public EscalaCreditoForm(String title) {
         this.setTitle(title);
         this.setClosable(true);
         this.setMaximizable(true);
@@ -86,7 +88,7 @@ public class RegionForm extends JInternalFrame {
         titlePanel.setBackground(TABLE_HEADER);
         titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel titleLabel = new JLabel("REGIÓN");
+        JLabel titleLabel = new JLabel("ESCALA CREDITO");
         titleLabel.setFont(HEADER_FONT);
         titleLabel.setForeground(Color.WHITE);
         titlePanel.add(titleLabel);
@@ -142,13 +144,22 @@ public class RegionForm extends JInternalFrame {
         c.gridx = 1; c.gridy = 1; c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
         registerFormPanel.add(nomField, c);
 
-        // Estado de registro
+        // Limite de credito
         c.gridx = 0; c.gridy = 2; c.weightx = 0.0; c.fill = GridBagConstraints.NONE;
+        registerFormPanel.add(makeStyledLabel("Escala Credito:"), c);
+
+        limCreField = makeStyledField(10);
+        setFieldEditable(limCreField, false);
+        c.gridx = 1; c.gridy = 2; c.weightx = 0.0; c.fill = GridBagConstraints.HORIZONTAL;
+        registerFormPanel.add(limCreField, c);
+
+        // Estado de registro
+        c.gridx = 0; c.gridy = 3; c.weightx = 0.0; c.fill = GridBagConstraints.NONE;
         registerFormPanel.add(makeStyledLabel("Est. Reg.:"), c);
 
         estRegField = makeStyledField(5);
         setFieldEditable(estRegField, false);
-        c.gridx = 1; c.gridy = 2; c.weightx = 1.0; c.fill = GridBagConstraints.NONE;
+        c.gridx = 1; c.gridy = 3; c.weightx = 1.0; c.fill = GridBagConstraints.NONE;
         registerFormPanel.add(estRegField, c);
 
         registerPanel.add(registerFormPanel, BorderLayout.CENTER);
@@ -244,12 +255,13 @@ public class RegionForm extends JInternalFrame {
         model = new DefaultTableModel();
         model.addColumn("Código");
         model.addColumn("Nombre");
+        model.addColumn("Limite Credito");
         model.addColumn("Est. Reg.");
 
         getTableData(model);
-        tableRegion = getJTable(model);
+        table = getJTable(model);
 
-        JTableHeader tableHeader = tableRegion.getTableHeader();
+        JTableHeader tableHeader = table.getTableHeader();
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
 
             @Override
@@ -273,8 +285,8 @@ public class RegionForm extends JInternalFrame {
             }
         };
 
-        for (int i = 0; i < tableRegion.getColumnCount(); i++) {
-            tableRegion.getColumnModel()
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel()
                     .getColumn(i)
                     .setHeaderRenderer(headerRenderer);
         }
@@ -300,15 +312,16 @@ public class RegionForm extends JInternalFrame {
             }
         };
 
-        for (int i = 0; i < tableRegion.getColumnCount(); i++) {
-            tableRegion.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
         }
 
-        tableRegion.getColumnModel().getColumn(0).setPreferredWidth(120);
-        tableRegion.getColumnModel().getColumn(1).setPreferredWidth(340);
-        tableRegion.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table.getColumnModel().getColumn(0).setPreferredWidth(120);
+        table.getColumnModel().getColumn(1).setPreferredWidth(340);
+        table.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table.getColumnModel().getColumn(3).setPreferredWidth(200);
 
-        JScrollPane scrollPane = new JScrollPane(tableRegion);
+        JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.getViewport().setBackground(Color.WHITE);
         scrollPane.setOpaque(false);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
@@ -337,14 +350,15 @@ public class RegionForm extends JInternalFrame {
     }
 
     private static void getTableData(DefaultTableModel model) {
-        RegionDAO dao = new RegionDAO();
+        EscalaCreditoDAO dao = new EscalaCreditoDAO();
         try {
-            List<Region> regiones = dao.listarTodo();
-            for (Region r : regiones) {
+            List<EscalaCredito> escala = dao.listarTodo();
+            for (EscalaCredito e : escala) {
                 model.addRow(new Object[]{
-                        r.getRegCod(),
-                        r.getRegNom(),
-                        r.getRegEstReg()
+                        e.getEscCreCod(),
+                        e.getEscCreNom(),
+                        e.getEscCreLimCre(),
+                        e.getEscCreEstReg()
                 });
             }
         } catch (Exception e) {
@@ -459,6 +473,7 @@ public class RegionForm extends JInternalFrame {
         addButton.addActionListener(e -> {
             if (carFlaAct == 0) {
                 setFieldEditable(nomField, true);
+                setFieldEditable(limCreField, true);
                 estRegField.setText("A");
 
                 carFlaAct = 1;
@@ -471,21 +486,23 @@ public class RegionForm extends JInternalFrame {
 
         // Accion de modificar
         modifyButton.addActionListener(e -> {
-
             if (carFlaAct == 0) {
-                int row = tableRegion.getSelectedRow();
+                int row = table.getSelectedRow();
                 if (row == -1) {
                     JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a modificar");
                     return;
                 }
 
-                String cod = tableRegion.getValueAt(row, 0).toString();
-                String nom = tableRegion.getValueAt(row, 1).toString();
-                String estReg = tableRegion.getValueAt(row, 2).toString();
+                String cod = table.getValueAt(row, 0).toString();
+                String nom = table.getValueAt(row, 1).toString();
+                String limCre = table.getValueAt(row, 2).toString();
+                String estReg = table.getValueAt(row, 3).toString();
                 codField.setText(cod);
                 nomField.setText(nom);
+                limCreField.setText(limCre);
                 estRegField.setText(estReg);
                 setFieldEditable(nomField, true);
+                setFieldEditable(limCreField, true);
                 carFlaAct = 1;
                 modo = "MODIFY";
                 modifyButton.setBackground(BUTTON_SELECTED);
@@ -497,17 +514,19 @@ public class RegionForm extends JInternalFrame {
         // Accion de eliminar
         deleteButton.addActionListener(e -> {
             if (carFlaAct == 0) {
-                int row = tableRegion.getSelectedRow();
+                int row = table.getSelectedRow();
                 if (row == -1) {
                     JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a modificar");
                     return;
                 }
 
-                String cod = tableRegion.getValueAt(row, 0).toString();
-                String nom = tableRegion.getValueAt(row, 1).toString();
-                String estReg = tableRegion.getValueAt(row, 2).toString();
+                String cod = table.getValueAt(row, 0).toString();
+                String nom = table.getValueAt(row, 1).toString();
+                String limCre = table.getValueAt(row, 2).toString();
+                String estReg = table.getValueAt(row, 3).toString();
                 codField.setText(cod);
                 nomField.setText(nom);
+                limCreField.setText(limCre);
                 estRegField.setText(estReg);
                 carFlaAct = 1;
                 modo = "DELETE";
@@ -520,17 +539,19 @@ public class RegionForm extends JInternalFrame {
         // Accion inactivar
         inactiveButton.addActionListener(e -> {
             if (carFlaAct == 0) {
-                int row = tableRegion.getSelectedRow();
+                int row = table.getSelectedRow();
                 if (row == -1) {
                     JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a inactivar");
                     return;
                 }
 
-                String cod = tableRegion.getValueAt(row, 0).toString();
-                String nom = tableRegion.getValueAt(row, 1).toString();
-                String estReg = tableRegion.getValueAt(row, 2).toString();
+                String cod = table.getValueAt(row, 0).toString();
+                String nom = table.getValueAt(row, 1).toString();
+                String limCre = table.getValueAt(row, 2).toString();
+                String estReg = table.getValueAt(row, 3).toString();
                 codField.setText(cod);
                 nomField.setText(nom);
+                limCreField.setText(limCre);
                 estRegField.setText(estReg);
                 carFlaAct = 1;
                 modo = "INACTIVATE";
@@ -543,17 +564,19 @@ public class RegionForm extends JInternalFrame {
         // Accion reactivar
         reactiveButton.addActionListener(e -> {
             if (carFlaAct == 0) {
-                int row = tableRegion.getSelectedRow();
+                int row = table.getSelectedRow();
                 if (row == -1) {
                     JOptionPane.showMessageDialog(null, "Seleccione en la tabla la fila a reactivar");
                     return;
                 }
 
-                String cod = tableRegion.getValueAt(row, 0).toString();
-                String nom = tableRegion.getValueAt(row, 1).toString();
-                String estReg = tableRegion.getValueAt(row, 2).toString();
+                String cod = table.getValueAt(row, 0).toString();
+                String nom = table.getValueAt(row, 1).toString();
+                String limCre = table.getValueAt(row, 2).toString();
+                String estReg = table.getValueAt(row, 3).toString();
                 codField.setText(cod);
                 nomField.setText(nom);
+                limCreField.setText(limCre);
                 estRegField.setText(estReg);
                 carFlaAct = 1;
                 modo = "REACTIVATE";
@@ -587,14 +610,15 @@ public class RegionForm extends JInternalFrame {
 
             int cod = codField.getText().isEmpty() ? 0 : Integer.parseInt(codField.getText());
             String nom = nomField.getText();
+            BigDecimal limCre = new BigDecimal(limCreField.getText());
             String estReg = estRegField.getText();
 
-            Region region = new Region(cod, nom, estReg);
+            EscalaCredito escCre = new EscalaCredito(cod, nom, limCre, estReg);
             try {
-                RegionDAO dao = new RegionDAO();
+                EscalaCreditoDAO dao = new EscalaCreditoDAO();
                 switch (modo) {
                     case "ADD": {
-                        dao.agregar(region);
+                        dao.agregar(escCre);
                         JOptionPane.showMessageDialog(null, "Registro agregado correctamente", "Agregación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         addButton.setBackground(TABLE_HEADER);
                         refreshTable(true);
@@ -602,7 +626,7 @@ public class RegionForm extends JInternalFrame {
                         break;
                     }
                     case "MODIFY": {
-                        dao.modificar(new Region(cod, nom, estReg));
+                        dao.modificar(new EscalaCredito(cod, nom, limCre, estReg));
                         JOptionPane.showMessageDialog(null, "El registro fue modificado correctamente", "Modificación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         modifyButton.setBackground(TABLE_HEADER);
                         refreshTable(false);
@@ -610,7 +634,7 @@ public class RegionForm extends JInternalFrame {
                         break;
                     }
                     case "DELETE": {
-                        dao.eliminar(region.getRegCod());
+                        dao.eliminar(escCre.getEscCreCod());
                         JOptionPane.showMessageDialog(null, "El registro fue marcado como eliminado correctamente", "Eliminación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         deleteButton.setBackground(TABLE_HEADER);
                         refreshTable(false);
@@ -618,7 +642,7 @@ public class RegionForm extends JInternalFrame {
                         break;
                     }
                     case "INACTIVATE": {
-                        dao.inactivar(region.getRegCod());
+                        dao.inactivar(escCre.getEscCreCod());
                         JOptionPane.showMessageDialog(null, "El registro fue marcado como inactivado correctamente", "Inactivación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         inactiveButton.setBackground(TABLE_HEADER);
                         refreshTable(false);
@@ -626,7 +650,7 @@ public class RegionForm extends JInternalFrame {
                         break;
                     }
                     case "REACTIVATE": {
-                        dao.reactivar(region.getRegCod());
+                        dao.reactivar(escCre.getEscCreCod());
                         JOptionPane.showMessageDialog(null, "El registro fue marcado como activado correctamente", "Inactivación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         reactiveButton.setBackground(TABLE_HEADER);
                         refreshTable(false);
@@ -642,7 +666,7 @@ public class RegionForm extends JInternalFrame {
                 carFlaAct = 0;
                 setFieldsNotEditable();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Ocurrio al actualizar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Ocurrio un error al actualizar el registro", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -656,13 +680,15 @@ public class RegionForm extends JInternalFrame {
         nomField.setText("");
         codField.setText("");
         estRegField.setText("");
-        tableRegion.clearSelection();
+        limCreField.setText("");
+        table.clearSelection();
     }
 
     private void setFieldsNotEditable() {
         setFieldEditable(nomField, false);
         setFieldEditable(codField, false);
         setFieldEditable(estRegField, false);
+        setFieldEditable(limCreField, false);
     }
 
     private void refreshTable(boolean toFinal) {
@@ -673,8 +699,8 @@ public class RegionForm extends JInternalFrame {
             int lastRow = model.getRowCount() - 1;
 
             if (lastRow >= 0) {
-                tableRegion.scrollRectToVisible(
-                        tableRegion.getCellRect(lastRow, 0, true)
+                table.scrollRectToVisible(
+                        table.getCellRect(lastRow, 0, true)
                 );
             }
         }
@@ -684,6 +710,6 @@ public class RegionForm extends JInternalFrame {
         UIManager.put("ComboBox.disabledBackground", DISABLED);
         UIManager.put("ComboBox.disabledForeground", Color.BLACK);
 
-        new RegionForm("HOla");
+        new EscalaCreditoForm("HOla");
     }
 }

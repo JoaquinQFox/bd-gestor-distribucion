@@ -1,5 +1,6 @@
 package unsa.bd.views;
 
+import unsa.bd.views.forms.EscalaCreditoForm;
 import unsa.bd.views.forms.RegionForm;
 
 import javax.swing.*;
@@ -59,7 +60,7 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Clasificación Producto", () -> openFrame(placeholder("Categoría")));
         addItem(sidebar, "Estado Factura", () -> openFrame(placeholder("Proveedor")));
         addItem(sidebar, "Estado Pedido", () -> openFrame(placeholder("Tipo Comprobante")));
-        addItem(sidebar, "Escala Credito", () -> openFrame(placeholder("Tipo Cliente")));
+        addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm("Escala credito")));
         addItem(sidebar, "Rol Usuario", () -> openFrame(placeholder("Estado Civil")));
         addItem(sidebar, "Tipo Cliente", () -> openFrame(placeholder("Tipo Documento")));
         addItem(sidebar, "Tipo Documento", () -> openFrame(placeholder("Tipo Documento")));
