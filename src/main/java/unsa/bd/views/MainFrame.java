@@ -1,5 +1,6 @@
 package unsa.bd.views;
 
+import unsa.bd.views.forms.ClasificacionProductoForm;
 import unsa.bd.views.forms.EscalaCreditoForm;
 import unsa.bd.views.forms.RegionForm;
 
@@ -57,7 +58,7 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Cargo", () -> openFrame(placeholder("Departamento")));
         addItem(sidebar, "Tipo de acción", () -> openFrame(placeholder("Banco")));
         addItem(sidebar, "Cargo", () -> openFrame(placeholder("Moneda")));
-        addItem(sidebar, "Clasificación Producto", () -> openFrame(placeholder("Categoría")));
+        addItem(sidebar, "Clasificación Producto", () -> openFrame(new ClasificacionProductoForm("Clasificacion")));
         addItem(sidebar, "Estado Factura", () -> openFrame(placeholder("Proveedor")));
         addItem(sidebar, "Estado Pedido", () -> openFrame(placeholder("Tipo Comprobante")));
         addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm("Escala credito")));

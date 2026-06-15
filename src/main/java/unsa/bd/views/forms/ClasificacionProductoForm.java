@@ -1,7 +1,7 @@
 package unsa.bd.views.forms;
 
-import unsa.bd.dao.RegionDAO;
-import unsa.bd.model.Region;
+import unsa.bd.dao.ClasificacionProductoDAO;
+import unsa.bd.model.ClasificacionProducto;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
@@ -11,7 +11,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
 
-public class RegionForm extends JInternalFrame {
+public class ClasificacionProductoForm extends JInternalFrame {
     // Colores
     private static final Color FONDO = new Color(248, 250, 252);
     private static final Color BORDER = new Color(47, 52, 60);
@@ -52,7 +52,7 @@ public class RegionForm extends JInternalFrame {
     private int carFlaAct = 0;
     private String modo = "MODO";
 
-    public RegionForm(String title) {
+    public ClasificacionProductoForm(String title) {
         this.setTitle(title);
         this.setClosable(true);
         this.setMaximizable(true);
@@ -86,7 +86,7 @@ public class RegionForm extends JInternalFrame {
         titlePanel.setBackground(TABLE_HEADER);
         titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel titleLabel = new JLabel("REGIÓN");
+        JLabel titleLabel = new JLabel("CLASIFICACIÓN PRODUCTO");
         titleLabel.setFont(HEADER_FONT);
         titleLabel.setForeground(Color.WHITE);
         titlePanel.add(titleLabel);
@@ -337,14 +337,14 @@ public class RegionForm extends JInternalFrame {
     }
 
     private static void getTableData(DefaultTableModel model) {
-        RegionDAO dao = new RegionDAO();
+        ClasificacionProductoDAO dao = new ClasificacionProductoDAO();
         try {
-            List<Region> regiones = dao.listarTodo();
-            for (Region r : regiones) {
+            List<ClasificacionProducto> claPro = dao.listarTodo();
+            for (ClasificacionProducto c : claPro) {
                 model.addRow(new Object[]{
-                        r.getRegCod(),
-                        r.getRegNom(),
-                        r.getRegEstReg()
+                        c.getClaProCod(),
+                        c.getClaProNom(),
+                        c.getClaProEstReg()
                 });
             }
         } catch (Exception e) {
@@ -589,12 +589,12 @@ public class RegionForm extends JInternalFrame {
             String nom = nomField.getText();
             String estReg = estRegField.getText();
 
-            Region region = new Region(cod, nom, estReg);
+            ClasificacionProducto claPro = new ClasificacionProducto(cod, nom, estReg);
             try {
-                RegionDAO dao = new RegionDAO();
+                ClasificacionProductoDAO dao = new ClasificacionProductoDAO();
                 switch (modo) {
                     case "ADD": {
-                        dao.agregar(region);
+                        dao.agregar(claPro);
                         JOptionPane.showMessageDialog(null, "Registro agregado correctamente", "Agregación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         addButton.setBackground(TABLE_HEADER);
                         refreshTable(true);
@@ -602,7 +602,7 @@ public class RegionForm extends JInternalFrame {
                         break;
                     }
                     case "MODIFY": {
-                        dao.modificar(new Region(cod, nom, estReg));
+                        dao.modificar(new ClasificacionProducto(cod, nom, estReg));
                         JOptionPane.showMessageDialog(null, "El registro fue modificado correctamente", "Modificación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         modifyButton.setBackground(TABLE_HEADER);
                         refreshTable(false);
@@ -610,7 +610,7 @@ public class RegionForm extends JInternalFrame {
                         break;
                     }
                     case "DELETE": {
-                        dao.eliminar(region.getRegCod());
+                        dao.eliminar(claPro.getClaProCod());
                         JOptionPane.showMessageDialog(null, "El registro fue marcado como eliminado correctamente", "Eliminación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         deleteButton.setBackground(TABLE_HEADER);
                         refreshTable(false);
@@ -618,7 +618,7 @@ public class RegionForm extends JInternalFrame {
                         break;
                     }
                     case "INACTIVATE": {
-                        dao.inactivar(region.getRegCod());
+                        dao.inactivar(claPro.getClaProCod());
                         JOptionPane.showMessageDialog(null, "El registro fue marcado como inactivado correctamente", "Inactivación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         inactiveButton.setBackground(TABLE_HEADER);
                         refreshTable(false);
@@ -626,7 +626,7 @@ public class RegionForm extends JInternalFrame {
                         break;
                     }
                     case "REACTIVATE": {
-                        dao.reactivar(region.getRegCod());
+                        dao.reactivar(claPro.getClaProCod());
                         JOptionPane.showMessageDialog(null, "El registro fue marcado como activado correctamente", "Inactivación de Registro", JOptionPane.INFORMATION_MESSAGE);
                         reactiveButton.setBackground(TABLE_HEADER);
                         refreshTable(false);
@@ -684,6 +684,6 @@ public class RegionForm extends JInternalFrame {
         UIManager.put("ComboBox.disabledBackground", DISABLED);
         UIManager.put("ComboBox.disabledForeground", Color.BLACK);
 
-        new RegionForm("HOla");
+        new ClasificacionProductoForm("HOla");
     }
 }

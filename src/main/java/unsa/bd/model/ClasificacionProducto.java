@@ -8,10 +8,10 @@ public class ClasificacionProducto {
     public ClasificacionProducto() {
     }
 
-    public ClasificacionProducto(String claProEstReg, String claProNom, int claProCod) {
-        this.claProEstReg = claProEstReg;
+    public ClasificacionProducto(int claProCod, String claProNom, String claProEstReg) {
         this.claProNom = claProNom;
         this.claProCod = claProCod;
+        this.claProEstReg = claProEstReg;
     }
 
     public int getClaProCod() {
