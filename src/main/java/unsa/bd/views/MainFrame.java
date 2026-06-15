@@ -18,7 +18,7 @@ public class MainFrame extends JFrame {
     private JInternalFrame currentFrame;
 
     public MainFrame() {
-        setTitle("Sistema de Gestión");
+        setTitle("Sistema de Distribución");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 680);
         setLocationRelativeTo(null);
@@ -51,16 +51,15 @@ public class MainFrame extends JFrame {
         sidebar.add(sep);
         sidebar.add(Box.createVerticalStrut(8));
 
-        addItem(sidebar, "Región", () -> openFrame(new RegionForm("Región")));
-        addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm("Provincia")));
-        addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("Distrito")));
-        addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("Departamento")));
-        addItem(sidebar, "Accion", () -> openFrame(new AccionForm("Banco")));
-        addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("HOlak")));
-        addItem(sidebar, "Clasificación Producto", () -> openFrame(new ClasificacionProductoForm("Clasificacion")));
-        addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm("Estado factura")));
-        addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm("Estado pedido")));
-        addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm("Escala credito")));
+        addItem(sidebar, "Región", () -> openFrame(new RegionForm("GZZ001 - REGION")));
+        addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm("GZZ002 - CIUDAD")));
+        addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("GZZ003 - DEPARTAMENTO")));
+        addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("GZZ004 - CARGO")));
+        addItem(sidebar, "Accion", () -> openFrame(new AccionForm("GZZ005 - ACCION")));
+        addItem(sidebar, "Clasificación Producto", () -> openFrame(new ClasificacionProductoForm("GZZ006 - CLASIFICACION PRODUCTO")));
+        addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm("GZZ007 - ESTADO FACTURA")));
+        addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm("GZZ008 - ESTADO PEDIDO")));
+        addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm("GZZ009 - ESCALA CREDITO")));
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
