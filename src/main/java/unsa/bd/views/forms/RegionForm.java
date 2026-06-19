@@ -74,9 +74,9 @@ public class RegionForm extends JInternalFrame {
         JPanel mainPanel = new JPanel(new BorderLayout(0, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         mainPanel.setBackground(FONDO);
+
         mainPanel.add(buildHeader(), BorderLayout.NORTH);
         mainPanel.add(buildCenterContent(), BorderLayout.CENTER);
-
         this.add(mainPanel);
     }
 
@@ -139,7 +139,7 @@ public class RegionForm extends JInternalFrame {
 
         nomField = makeStyledField(0);
         setFieldEditable(nomField, false);
-        c.gridx = 1; c.gridy = 1; c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1; c.gridy = 1; c.weightx = 1.0; c.fill = GridBagConstraints.NONE;
         registerFormPanel.add(nomField, c);
 
         // Estado de registro
@@ -572,6 +572,7 @@ public class RegionForm extends JInternalFrame {
                 case "INACTIVATE" -> inactiveButton.setBackground(TABLE_HEADER);
                 case "REACTIVATE" -> reactiveButton.setBackground(TABLE_HEADER);
             }
+
 
             carFlaAct = 0;
             clearFields();
