@@ -1,6 +1,6 @@
-package unsa.bd.views.forms.util
+package unsa.bd.views.forms.util;
 
-enum class FormMode {
+public enum FormMode {
     ADD,
     MODIFY,
     DELETE,

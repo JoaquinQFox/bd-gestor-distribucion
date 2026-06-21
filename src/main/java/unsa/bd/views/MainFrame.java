@@ -52,7 +52,8 @@ public class MainFrame extends JFrame {
         sidebar.add(Box.createVerticalStrut(8));
 
         addItem(sidebar, "Región", () -> openFrame(new RegionForm("GZZ001 - REGION")));
-        addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm("GZZ002 - CIUDAD")));
+        addItem(sidebar, "Region nuevo", () -> openFrame(new RegionFormR()));
+        addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm()));
         addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("GZZ003 - DEPARTAMENTO")));
         addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("GZZ004 - CARGO")));
         addItem(sidebar, "Accion", () -> openFrame(new AccionForm("GZZ005 - ACCION")));
@@ -61,7 +62,6 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm("GZZ008 - ESTADO PEDIDO")));
         addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm("GZZ009 - ESCALA CREDITO")));
         addItem(sidebar, "Unidad Medida", () -> openFrame(new UnidadMedidaForm("GZZ010 - UNIDAD MEDIDA")));
-        addItem(sidebar, "Ejemplo", () -> openFrame(new ExampleForm()));
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
@@ -112,17 +112,6 @@ public class MainFrame extends JFrame {
                           Math.max(0, (d.height - f.height) / 2));
         frame.setVisible(true);
         try { frame.setSelected(true); } catch (Exception ignored) {}
-    }
-
-    private JInternalFrame placeholder(String name) {
-        JInternalFrame f = new JInternalFrame(name, true, true, true, true);
-        f.setSize(400, 250);
-        JLabel lbl = new JLabel("En construcción: " + name, SwingConstants.CENTER);
-        lbl.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        lbl.setForeground(new Color(150, 150, 150));
-        f.add(lbl);
-        f.setVisible(true);
-        return f;
     }
 
     public static void main(String[] args) {
