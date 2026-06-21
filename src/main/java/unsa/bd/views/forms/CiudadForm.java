@@ -140,11 +140,8 @@ public class CiudadForm extends BaseForm {
     protected void setFieldsEditable(boolean editable) {
         setFieldEditable(nomField, editable);
         setComboEditable(regComboBox, editable);
-        // El código es editable solo al agregar, no al modificar/eliminar/etc.
         setFieldEditable(codField, editable && modo.equals(FormMode.ADD));
-        // El estado de registro siempre es de solo lectura para el usuario
         setFieldEditable(estRegField, false);
-        // Al agregar, prerellenar el estado
         if (editable && modo.equals(FormMode.ADD)) {
             estRegField.setText("A");
         }
