@@ -37,7 +37,7 @@ public class ProductoForm extends BaseForm {
 
     @Override
     protected String[] getColumnNames() {
-        return new String[]{"Código", "Fabricante", "Descripción", "Precio", "Clasificación", "Uni. Med.", "Est. Reg."};
+        return new String[]{"Código", "Descripción", "Precio", "Clasificación", "Uni. Med.", "Fabricante", "Est. Reg."};
     }
 
     @Override
@@ -45,11 +45,6 @@ public class ProductoForm extends BaseForm {
         // Código
         codField = makeStyledField(10);
         addFieldRowToForm(form, "Código:", codField);
-
-        // Fabricante
-        fabComboBox = makeStyledComboBox(Fabricante::getFabNom);
-        loadFabricantesInComboBox(fabComboBox);
-        addFieldRowToForm(form, "Fabricante:", fabComboBox);
 
         // Descripción
         desField = makeStyledField(50);
@@ -72,6 +67,11 @@ public class ProductoForm extends BaseForm {
         // Estado de Registro
         estRegField = makeStyledField(5);
         addFieldRowToForm(form, "Est. Reg.:", estRegField);
+
+        // Fabricante
+        fabComboBox = makeStyledComboBox(Fabricante::getFabNom);
+        loadFabricantesInComboBox(fabComboBox);
+        addFieldRowToForm(form, "Fabricante:", fabComboBox);
 
         return form;
     }
@@ -103,11 +103,11 @@ public class ProductoForm extends BaseForm {
                 }
                 tableModel.addRow(new Object[]{
                         p.getProCod(),
-                        nomFab,
                         p.getProDes(),
                         p.getProPre(),
                         nomCla,
                         nomUni,
+                        nomFab,
                         p.getProEstReg()
                 });
             }
