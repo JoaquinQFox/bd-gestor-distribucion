@@ -148,13 +148,39 @@ public abstract class BaseForm extends JInternalFrame {
         JLabel subtitle = new JLabel(" Formulario de datos");
         subtitle.setFont(SECTION_FONT);
         subtitle.setPreferredSize(new Dimension(0, 28));
-        subtitle.setBorder(BorderFactory.createMatteBorder(0, 3, 0, 0, TABLE_HEADER));
+        subtitle.setBorder(
+                BorderFactory.createMatteBorder(0, 3, 0, 0, TABLE_HEADER)
+        );
+
         wrapper.add(subtitle, BorderLayout.NORTH);
 
         JPanel form = new JPanel(new GridBagLayout());
         form.setBorder(BorderFactory.createEmptyBorder(12, 5, 10, 5));
         form.setOpaque(false);
-        wrapper.add(buildFormFields(form), BorderLayout.CENTER);
+
+        JPanel formFields = buildFormFields(form);
+
+        JScrollPane scrollPane = new JScrollPane(formFields);
+        scrollPane.setBorder(null);
+        scrollPane.setHorizontalScrollBarPolicy(
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+        );
+
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setOpaque(false);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(10);
+
+        // Altura máxima permitida
+        int maxHeight = 300;
+
+        // Altura real del contenido
+        int preferredHeight = formFields.getPreferredSize().height;
+
+        scrollPane.setPreferredSize(
+                new Dimension(0, Math.min(preferredHeight, maxHeight))
+        );
+
+        wrapper.add(scrollPane, BorderLayout.CENTER);
 
         return wrapper;
     }
