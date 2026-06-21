@@ -1,24 +1,24 @@
 package unsa.bd.model;
 
 public class Cargo {
-    private int carCod;
+    private String carCod;
     private String carNom;
     private String carEstReg;
 
     public Cargo() {
     }
 
-    public Cargo(int carCod, String carNom, String carEstReg) {
+    public Cargo(String carCod, String carNom, String carEstReg) {
         this.carCod = carCod;
         this.carNom = carNom;
         this.carEstReg = carEstReg;
     }
 
-    public int getCarCod() {
+    public String getCarCod() {
         return carCod;
     }
 
-    public void setCarCod(int carCod) {
+    public void setCarCod(String carCod) {
         this.carCod = carCod;
     }
 
