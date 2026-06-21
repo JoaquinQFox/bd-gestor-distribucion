@@ -55,7 +55,7 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm()));
         addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("GZZ003 - DEPARTAMENTO")));
         addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("GZZ004 - CARGO")));
-        addItem(sidebar, "Accion", () -> openFrame(new AccionForm("GZZ005 - ACCION")));
+        addItem(sidebar, "Accion", () -> openFrame(new AccionForm()));
         addItem(sidebar, "Clasificación Producto", () -> openFrame(new ClasificacionProductoForm("GZZ006 - CLASIFICACION PRODUCTO")));
         addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm("GZZ007 - ESTADO FACTURA")));
         addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm("GZZ008 - ESTADO PEDIDO")));

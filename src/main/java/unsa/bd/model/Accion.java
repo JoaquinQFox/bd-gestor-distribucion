@@ -1,7 +1,7 @@
 package unsa.bd.model;
 
 public class Accion {
-    private int accCod;
+    private String accCod;
     private String accNom;
     private String accEstReg;
 
@@ -9,19 +9,17 @@ public class Accion {
     public Accion() {
     }
 
-    // Constructor completo
-    public Accion(int accCod, String accNom, String accEstReg) {
+    public Accion(String accCod, String accNom, String accEstReg) {
         this.accCod = accCod;
         this.accNom = accNom;
         this.accEstReg = accEstReg;
     }
 
-    // Getters y Setters
-    public int getAccCod() {
+    public String getAccCod() {
         return accCod;
     }
 
-    public void setAccCod(int accCod) {
+    public void setAccCod(String accCod) {
         this.accCod = accCod;
     }
 

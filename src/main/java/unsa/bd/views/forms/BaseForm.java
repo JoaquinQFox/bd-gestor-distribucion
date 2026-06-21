@@ -185,6 +185,10 @@ public abstract class BaseForm extends JInternalFrame {
         actualFormRow++;
     }
 
+    protected int[] getColumnWidths() {
+        return null;
+    }
+
     // Tabla
     private JPanel buildTableSection() {
         JPanel wrapper = styledCard();
@@ -204,6 +208,12 @@ public abstract class BaseForm extends JInternalFrame {
 
         configureTableHeader();
         configureTableCellRenderer();
+        int[] widhts = getColumnWidths();
+        if (widhts != null) {
+            for (int i = 0; i < widhts.length; i++) {
+                table.getColumnModel().getColumn(i).setPreferredWidth(widhts[i]);
+            }
+        }
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.getViewport().setBackground(Color.WHITE);
