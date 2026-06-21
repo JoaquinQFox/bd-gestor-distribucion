@@ -107,7 +107,7 @@ public class MovUsuarioForm extends BaseForm {
 
                 String nomUsu = "";
                 for (Usuario u : usuarios) {
-                    if (m.getMovUsuCod().equals(u.getUsuCod())) {
+                    if (m.getMovUsuUsuCod().equals(u.getUsuCod())) {
                         nomUsu = u.getUsuNomUsu();
                         break;
                     }
@@ -184,7 +184,7 @@ public class MovUsuarioForm extends BaseForm {
             }
         }
 
-        String nomUsu = tableModel.getValueAt(row, 6).toString();
+        String nomUsu = tableModel.getValueAt(row, 7).toString();
         for (int i = 0; i < usuComboBox.getItemCount(); i++) {
             if (usuComboBox.getItemAt(i).getUsuNomUsu().equals(nomUsu)) {
                 usuComboBox.setSelectedIndex(i);
