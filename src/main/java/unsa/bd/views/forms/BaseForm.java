@@ -161,7 +161,7 @@ public abstract class BaseForm extends JInternalFrame {
 
     protected void addFieldRowToForm(JPanel form, String label, JTextField field) {
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(8, 20, 8, 20);
+        c.insets = new Insets(4, 20, 4, 20);
         c.anchor = GridBagConstraints.WEST;
 
         c.gridx = 0; c.gridy = actualFormRow; c.weightx = 0; c.fill = GridBagConstraints.NONE;
@@ -174,7 +174,7 @@ public abstract class BaseForm extends JInternalFrame {
 
     protected <T> void addFieldRowToForm(JPanel form, String label, JComboBox<T> box) {
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(8, 20, 8, 20);
+        c.insets = new Insets(4, 20, 4, 20);
         c.anchor = GridBagConstraints.WEST;
 
         c.gridx = 0; c.gridy = actualFormRow; c.weightx = 0; c.fill = GridBagConstraints.NONE;
@@ -428,7 +428,7 @@ public abstract class BaseForm extends JInternalFrame {
             }
         });
 
-        // ── SALIR ────────────────────────────────────────────────────────────
+        // Salir
         exitButton.addActionListener(e -> dispose());
     }
 
@@ -437,6 +437,7 @@ public abstract class BaseForm extends JInternalFrame {
     protected JLabel makeStyledLabel(String text) {
         JLabel lbl = new JLabel(text);
         lbl.setFont(LABEL_FONT);
+        lbl.setPreferredSize(new Dimension(100, lbl.getPreferredSize().height));
         return lbl;
     }
 
@@ -535,7 +536,7 @@ public abstract class BaseForm extends JInternalFrame {
 
     // Crear panel estilizado
     protected static JPanel styledCard() {
-        return new JPanel(new BorderLayout(0, 10)) {
+        return new JPanel(new BorderLayout(0, 5)) {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();

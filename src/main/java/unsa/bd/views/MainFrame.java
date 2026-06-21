@@ -24,7 +24,17 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel root = new JPanel(new BorderLayout());
-        root.add(buildSidebar(), BorderLayout.WEST);
+
+        JPanel sidebar = buildSidebar();
+
+        JScrollPane sideBarScroll = new JScrollPane(sidebar);
+        sideBarScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        sideBarScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        sideBarScroll.setBorder(null);
+        sideBarScroll.setPreferredSize(new Dimension(196, 0));
+        sideBarScroll.getVerticalScrollBar().setUnitIncrement(16);
+
+        root.add(sideBarScroll, BorderLayout.WEST);
         root.add(buildDesktop(), BorderLayout.CENTER);
         setContentPane(root);
 
@@ -35,7 +45,6 @@ public class MainFrame extends JFrame {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         sidebar.setBackground(BLUE);
-        sidebar.setPreferredSize(new Dimension(180, 0));
 
         JLabel title = new JLabel("TABLAS");
         title.setFont(TITLE_FONT);
