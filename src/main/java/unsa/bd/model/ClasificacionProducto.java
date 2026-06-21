@@ -1,24 +1,24 @@
 package unsa.bd.model;
 
 public class ClasificacionProducto {
-    private int claProCod;
+    private String claProCod;
     private String claProNom;
     private String claProEstReg;
 
     public ClasificacionProducto() {
     }
 
-    public ClasificacionProducto(int claProCod, String claProNom, String claProEstReg) {
-        this.claProNom = claProNom;
+    public ClasificacionProducto(String claProCod, String claProNom, String claProEstReg) {
         this.claProCod = claProCod;
+        this.claProNom = claProNom;
         this.claProEstReg = claProEstReg;
     }
 
-    public int getClaProCod() {
+    public String getClaProCod() {
         return claProCod;
     }
 
-    public void setClaProCod(int claProCod) {
+    public void setClaProCod(String claProCod) {
         this.claProCod = claProCod;
     }
 
