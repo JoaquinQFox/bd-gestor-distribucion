@@ -1,6 +1,5 @@
 package unsa.bd.views;
 
-import unsa.bd.model.Usuario;
 import unsa.bd.views.forms.*;
 
 import javax.swing.*;
@@ -84,6 +83,7 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Tipo Documento", () -> openFrame(new TipoDocumentoForm()));
         addItem(sidebar, "Persona", () -> openFrame(new PersonaForm()));
         addItem(sidebar, "Usuario", () -> openFrame(new UsuarioForm()));
+        addItem(sidebar, "Movimiento Usuario", () -> openFrame(new MovUsuarioForm()));
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;

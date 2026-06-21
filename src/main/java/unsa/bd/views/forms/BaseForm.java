@@ -171,6 +171,18 @@ public abstract class BaseForm extends JInternalFrame {
         form.add(field, c);
         actualFormRow++;
     }
+    protected void addFieldRowToForm(JPanel form, String label, JSpinner spinner) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(4, 20, 4, 20);
+        c.anchor = GridBagConstraints.WEST;
+        c.gridx = 0; c.gridy = actualFormRow; c.weightx = 0; c.fill = GridBagConstraints.NONE;
+        form.add(makeStyledLabel(label), c);
+        setSpinnerEditable(spinner, false);
+        c.gridx = 1; c.weightx = 1;
+        form.add(spinner, c);
+        actualFormRow++;
+    }
+
 
     protected <T> void addFieldRowToForm(JPanel form, String label, JComboBox<T> box) {
         GridBagConstraints c = new GridBagConstraints();
@@ -528,6 +540,38 @@ public abstract class BaseForm extends JInternalFrame {
 
     protected <T> void setComboEditable(JComboBox<T> box, boolean editable) {
         box.setEnabled(editable);
+    }
+
+    protected JSpinner makeStyledSpinner() {
+        JSpinner spinner = new JSpinner(new SpinnerDateModel());
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(spinner, "HH:mm:ss");
+        spinner.setEditor(timeEditor);
+
+        JFormattedTextField textField = timeEditor.getTextField();
+        textField.setFont(FIELD_FONT);
+        textField.setBackground(Color.WHITE);
+
+        textField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(BORDER, 1, true),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+
+        spinner.setBorder(BorderFactory.createEmptyBorder());
+
+        spinner.setPreferredSize(new Dimension(spinner.getPreferredSize().width, 32));
+
+        return spinner;
+    }
+
+    protected void setSpinnerEditable(JSpinner spinner, boolean editable) {
+        spinner.setEnabled(editable);
+        spinner.setFocusable(editable);
+
+        if (spinner.getEditor() instanceof JSpinner.DefaultEditor editor) {
+            JFormattedTextField textField = editor.getTextField();
+            textField.setEditable(editable);
+            textField.setFocusable(editable);
+            textField.setBackground(editable ? Color.WHITE : DISABLED);
+        }
     }
 
 
