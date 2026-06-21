@@ -86,6 +86,7 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Movimiento Usuario", () -> openFrame(new MovUsuarioForm()));
         addItem(sidebar, "Proveedor", () -> openFrame(new ProveedorForm()));
         addItem(sidebar, "Stock", () -> openFrame(new StockForm()));
+        addItem(sidebar, "Pedido Cab", () -> openFrame(new PedidoCabForm()));
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
