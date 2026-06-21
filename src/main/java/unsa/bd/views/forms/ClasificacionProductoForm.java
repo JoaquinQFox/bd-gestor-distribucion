@@ -13,13 +13,13 @@ public class ClasificacionProductoForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public ClasificacionProductoForm() {
-        super("EG001 - REGIÓN");
+    public ClasificacionProductoForm(String title) {
+        super(title);
     }
 
     @Override
     protected String getHeaderTitle() {
-        return "R2-REGION";
+        return "CLASIFICACIÓN PRODUCTO";
     }
 
     @Override

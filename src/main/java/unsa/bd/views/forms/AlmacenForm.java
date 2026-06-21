@@ -22,8 +22,8 @@ public class AlmacenForm extends BaseForm {
 
     private static final int COL_EST_REG = 5;
 
-    public AlmacenForm() {
-        super("EG009 - ALMACEN");
+    public AlmacenForm(String title) {
+        super(title);
     }
 
     @Override

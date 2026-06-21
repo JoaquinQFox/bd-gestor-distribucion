@@ -21,13 +21,13 @@ public class CompraDetForm extends BaseForm {
 
     private static final int COL_EST_REG = 5;
 
-    public CompraDetForm() {
-        super("EG019 - COMPRA DETALLE");
+    public CompraDetForm(String title) {
+        super(title);
     }
 
     @Override
     protected String getHeaderTitle() {
-        return "COMPRA DETALLE";
+        return "COMPRA - DETALLES";
     }
 
     @Override

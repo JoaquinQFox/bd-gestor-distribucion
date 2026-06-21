@@ -17,8 +17,8 @@ public class ProveedorForm extends BaseForm {
 
     private static final int COL_EST_REG = 4;
 
-    public ProveedorForm() {
-        super("EG013 - PROVEEDOR");
+    public ProveedorForm(String title) {
+        super(title);
     }
 
     @Override

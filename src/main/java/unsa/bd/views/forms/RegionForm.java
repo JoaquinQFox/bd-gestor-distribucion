@@ -13,8 +13,8 @@ public class RegionForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public RegionForm() {
-        super("EG001 - REGIÓN");
+    public RegionForm(String title) {
+        super(title);
     }
 
     @Override

@@ -12,8 +12,8 @@ public class TipoFacturaForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public TipoFacturaForm() {
-        super("EG002 - TIPO FACTURA");
+    public TipoFacturaForm(String title) {
+        super(title);
     }
 
     @Override

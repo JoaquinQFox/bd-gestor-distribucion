@@ -15,8 +15,8 @@ public class EscalaCreditoForm extends BaseForm {
     private JTextField limCreField;
     private JTextField estRegField;
 
-    public EscalaCreditoForm() {
-        super("EG001 - ESCALA CREDITO");
+    public EscalaCreditoForm(String title) {
+        super(title);
     }
 
     @Override

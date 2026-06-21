@@ -27,8 +27,8 @@ public class MovUsuarioForm extends BaseForm {
     private JComboBox<Usuario> usuComboBox;
     private JTextField         estRegField;
 
-    public MovUsuarioForm() {
-        super("EG004-MOV_USUARIO");
+    public MovUsuarioForm(String title) {
+        super(title);
     }
 
     @Override

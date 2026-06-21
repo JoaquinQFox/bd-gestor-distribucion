@@ -13,8 +13,8 @@ public class DepartamentoForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public DepartamentoForm() {
-        super("EG005 - DEPARTAMENTO");
+    public DepartamentoForm(String title) {
+        super(title);
     }
 
     @Override

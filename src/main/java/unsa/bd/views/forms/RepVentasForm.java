@@ -22,8 +22,8 @@ public class RepVentasForm extends BaseForm {
 
     private static final int COL_EST_REG = 6;
 
-    public RepVentasForm() {
-        super("EG007 - REP. VENTAS");
+    public RepVentasForm(String title) {
+        super(title);
     }
 
     @Override

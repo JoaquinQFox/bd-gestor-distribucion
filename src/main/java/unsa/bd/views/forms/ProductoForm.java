@@ -26,8 +26,8 @@ public class ProductoForm extends BaseForm {
 
     private static final int COL_EST_REG = 6;
 
-    public ProductoForm() {
-        super("EG004 - PRODUCTO");
+    public ProductoForm(String title) {
+        super(title);
     }
 
     @Override

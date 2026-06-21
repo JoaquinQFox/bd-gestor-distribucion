@@ -60,41 +60,67 @@ public class MainFrame extends JFrame {
         sidebar.add(sep);
         sidebar.add(Box.createVerticalStrut(8));
 
-        addItem(sidebar, "Region nuevo", () -> openFrame(new RegionForm()));
-        addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm()));
-        addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm()));
-        addItem(sidebar, "Cargo", () -> openFrame(new CargoForm()));
-        addItem(sidebar, "Accion", () -> openFrame(new AccionForm()));
-        addItem(sidebar, "Clasificación Producto", () -> openFrame(new ClasificacionProductoForm()));
-        addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm()));
-        addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm()));
-        addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm()));
-        addItem(sidebar, "Unidad Medida", () -> openFrame(new UnidadMedidaForm()));
-        addItem(sidebar, "Rol Usuario", () -> openFrame(new RolUsuarioForm()));
-        addItem(sidebar, "Tipo Cliente", () -> openFrame(new TipoClienteForm()));
-        addItem(sidebar, "Tipo Factura", () -> openFrame(new TipoFacturaForm()));
-        addItem(sidebar, "Fabricante", () -> openFrame(new FabricanteForm()));
-        addItem(sidebar, "Producto", () -> openFrame(new ProductoForm()));
-        addItem(sidebar, "Oficina", () -> openFrame(new OficinaForm()));
-        addItem(sidebar, "Rep. Ventas", () -> openFrame(new RepVentasForm()));
-        addItem(sidebar, "Cliente", () -> openFrame(new ClienteForm()));
-        addItem(sidebar, "Almacen", () -> openFrame(new AlmacenForm()));
-        addItem(sidebar, "Empresa", () -> openFrame(new EmpresaForm()));
-        addItem(sidebar, "Tipo Documento", () -> openFrame(new TipoDocumentoForm()));
-        addItem(sidebar, "Persona", () -> openFrame(new PersonaForm()));
-        addItem(sidebar, "Usuario", () -> openFrame(new UsuarioForm()));
-        addItem(sidebar, "Movimiento Usuario", () -> openFrame(new MovUsuarioForm()));
-        addItem(sidebar, "Proveedor", () -> openFrame(new ProveedorForm()));
-        addItem(sidebar, "Stock", () -> openFrame(new StockForm()));
-        addItem(sidebar, "Pedido Cab", () -> openFrame(new PedidoCabForm()));
-        addItem(sidebar, "Pedido Det", () -> openFrame(new PedidoDetForm()));
-        addItem(sidebar, "Factura Cab", () -> openFrame(new FacturaCabForm()));
-        addItem(sidebar, "Factura Det", () -> openFrame(new FacturaDetForm()));
-        addItem(sidebar, "Compra Cab", () -> openFrame(new CompraCabForm()));
-        addItem(sidebar, "Compra Det", () -> openFrame(new CompraDetForm()));
+        // CLIENTES (Subsistema D1)
+        addMenuHeader(sidebar, "CLIENTES");
+        addItem(sidebar, "Cliente", () -> openFrame(new ClienteForm("D13001 - CLIENTE")));
+        addItem(sidebar, "Empresa", () -> openFrame(new EmpresaForm("D13002 - EMPRESA")));
+        addItem(sidebar, "Persona", () -> openFrame(new PersonaForm("D13003 - PERSONA")));
+        addItem(sidebar, "Tipo Cliente", () -> openFrame(new TipoClienteForm("D13004 - TIPO CLIENTE")));
+        addItem(sidebar, "Tipo Documento", () -> openFrame(new TipoDocumentoForm("D13005 - TIPO DOCUMENTO")));
+        addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm("D13006 - ESCALA CRÉDITO")));
+
+        // VENTAS (Subsistema D2)
+        addMenuHeader(sidebar, "VENTAS");
+        addItem(sidebar, "Oficina", () -> openFrame(new OficinaForm("D23001 - OFICINA")));
+        addItem(sidebar, "Rep. Ventas", () -> openFrame(new RepVentasForm("D23002 - REPRESENTANTE DE VENTAS")));
+        addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("D23003 - CARGO")));
+        addItem(sidebar, "Region nuevo", () -> openFrame(new RegionForm("D23004 - REGIÓN")));
+        addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("D23005 - DEPARTAMENTO")));
+        addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm("D23006 - CIUDAD")));
+
+        // FACTURACIÓN (Subsistema D3)
+        addMenuHeader(sidebar, "FACTURACIÓN");
+        addItem(sidebar, "Factura Cab", () -> openFrame(new FacturaCabForm("D33001 - FACTURA CABECERA")));
+        addItem(sidebar, "Factura Det", () -> openFrame(new FacturaDetForm("D33002 - FACTURA DETALLE")));
+        addItem(sidebar, "Pedido Cab", () -> openFrame(new PedidoCabForm("D33003 - PEDIDO CABECERA")));
+        addItem(sidebar, "Pedido Det", () -> openFrame(new PedidoDetForm("D33004 - PEDIDO DETALLE")));
+        addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm("D33005 - ESTADO FACTURA")));
+        addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm("D33006 - ESTADO PEDIDO")));
+        addItem(sidebar, "Accion", () -> openFrame(new AccionForm("D33007 - ACCIÓN")));
+        addItem(sidebar, "Tipo Factura", () -> openFrame(new TipoFacturaForm("D33008 - TIPO FACTURA")));
+
+        // INVENTARIO (Subsistema D4)
+        addMenuHeader(sidebar, "INVENTARIO");
+        addItem(sidebar, "Compra Cab", () -> openFrame(new CompraCabForm("D43001 - COMPRA CABECERA")));
+        addItem(sidebar, "Compra Det", () -> openFrame(new CompraDetForm("D43002 - COMPRA DETALLE")));
+        addItem(sidebar, "Almacen", () -> openFrame(new AlmacenForm("D43003 - ALMACÉN")));
+        addItem(sidebar, "Producto", () -> openFrame(new ProductoForm("D43004 - PRODUCTO")));
+        addItem(sidebar, "Stock", () -> openFrame(new StockForm("D43005 - STOCK")));
+        addItem(sidebar, "Proveedor", () -> openFrame(new ProveedorForm("D43006 - PROVEEDOR")));
+        addItem(sidebar, "Fabricante", () -> openFrame(new FabricanteForm("D43007 - FABRICANTE")));
+        addItem(sidebar, "Unidad Medida", () -> openFrame(new UnidadMedidaForm("D43008 - UNIDAD DE MEDIDA")));
+        addItem(sidebar, "Clasificación Producto", () -> openFrame(new ClasificacionProductoForm("D43009 - CLASIFICACIÓN PRODUCTO")));
+
+        // SEGURIDAD (Subsistema D5)
+        addMenuHeader(sidebar, "SEGURIDAD");
+        addItem(sidebar, "Usuario", () -> openFrame(new UsuarioForm("D53001 - USUARIO")));
+        addItem(sidebar, "Movimiento Usuario", () -> openFrame(new MovUsuarioForm("D53002 - MOVIMIENTO USUARIO")));
+        addItem(sidebar, "Rol Usuario", () -> openFrame(new RolUsuarioForm("D53003 - ROL USUARIO")));
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;
+    }
+
+
+    private void addMenuHeader(JPanel sidebar, String text) {
+        sidebar.add(Box.createVerticalStrut(12));
+        JLabel header = new JLabel(text);
+        header.setFont(new Font("SansSerif", Font.BOLD, 18));
+        header.setForeground(new Color(255, 255, 255)); // Blanco sutil semitransparente
+        header.setBorder(BorderFactory.createEmptyBorder(10, 16, 10, 16));
+        header.setAlignmentX(Component.LEFT_ALIGNMENT);
+        sidebar.add(header);
+        sidebar.add(Box.createVerticalStrut(4));
     }
 
     private void addItem(JPanel sidebar, String text, Runnable action) {

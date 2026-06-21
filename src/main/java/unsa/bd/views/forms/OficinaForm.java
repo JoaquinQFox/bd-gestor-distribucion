@@ -23,8 +23,8 @@ public class OficinaForm extends BaseForm {
 
     private static final int COL_EST_REG = 5;
 
-    public OficinaForm() {
-        super("EG006 - OFICINA");
+    public OficinaForm(String title) {
+        super(title);
     }
 
     @Override

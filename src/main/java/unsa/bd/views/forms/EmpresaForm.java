@@ -17,8 +17,8 @@ public class EmpresaForm extends BaseForm {
 
     private static final int COL_EST_REG = 4;
 
-    public EmpresaForm() {
-        super("EG010 - EMPRESA");
+    public EmpresaForm(String title) {
+        super(title);
     }
 
     @Override

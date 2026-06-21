@@ -13,8 +13,8 @@ public class EstadoFacturaForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public EstadoFacturaForm() {
-        super("EG001 - ESTADO FACTURA");
+    public EstadoFacturaForm(String title) {
+        super(title);
     }
 
     @Override

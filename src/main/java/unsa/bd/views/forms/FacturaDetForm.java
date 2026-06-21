@@ -21,13 +21,13 @@ public class FacturaDetForm extends BaseForm {
 
     private static final int COL_EST_REG = 5;
 
-    public FacturaDetForm() {
-        super("EG017 - FACTURA DETALLE");
+    public FacturaDetForm(String title) {
+        super(title);
     }
 
     @Override
     protected String getHeaderTitle() {
-        return "FACTURA DETALLE";
+        return "FACTURA - DETALLES";
     }
 
     @Override

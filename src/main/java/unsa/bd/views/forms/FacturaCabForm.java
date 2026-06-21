@@ -30,13 +30,13 @@ public class FacturaCabForm extends BaseForm {
 
     private static final int COL_EST_REG = 15;
 
-    public FacturaCabForm() {
-        super("EG016 - FACTURA CABECERA");
+    public FacturaCabForm(String title) {
+        super(title);
     }
 
     @Override
     protected String getHeaderTitle() {
-        return "FACTURA CABECERA";
+        return "FACTURA - CABECERA";
     }
 
     @Override

@@ -28,8 +28,8 @@ public class ClienteForm extends BaseForm {
 
     private static final int COL_EST_REG = 7;
 
-    public ClienteForm() {
-        super("EG008 - CLIENTE");
+    public ClienteForm(String title) {
+        super(title);
     }
 
     @Override

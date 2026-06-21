@@ -19,8 +19,8 @@ public class PersonaForm extends BaseForm {
 
     private static final int COL_EST_REG = 4;
 
-    public PersonaForm() {
-        super("EG011 - PERSONA");
+    public PersonaForm(String title) {
+        super(title);
     }
 
     @Override

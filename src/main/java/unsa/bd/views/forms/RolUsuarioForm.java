@@ -13,8 +13,8 @@ public class RolUsuarioForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public RolUsuarioForm() {
-        super("EG001 - ROL USUARIO");
+    public RolUsuarioForm(String title) {
+        super(title);
     }
 
     @Override

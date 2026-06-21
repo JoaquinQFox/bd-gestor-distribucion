@@ -26,13 +26,13 @@ public class CompraCabForm extends BaseForm {
 
     private static final int COL_EST_REG = 7;
 
-    public CompraCabForm() {
-        super("EG018 - COMPRA CABECERA");
+    public CompraCabForm(String title) {
+        super(title);
     }
 
     @Override
     protected String getHeaderTitle() {
-        return "COMPRA CABECERA";
+        return "COMPRA - CABECERA";
     }
 
     @Override

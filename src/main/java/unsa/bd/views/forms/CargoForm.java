@@ -13,8 +13,8 @@ public class CargoForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public CargoForm() {
-        super("EG004 - CARGO");
+    public CargoForm(String title) {
+        super(title);
     }
 
     @Override

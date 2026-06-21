@@ -12,8 +12,8 @@ public class FabricanteForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public FabricanteForm() {
-        super("EG003 - FABRICANTE");
+    public FabricanteForm(String title) {
+        super(title);
     }
 
     @Override

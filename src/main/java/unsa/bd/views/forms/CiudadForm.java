@@ -19,8 +19,8 @@ public class CiudadForm extends BaseForm {
 
     private static final int COL_EST_REG = 3;
 
-    public CiudadForm() {
-        super("EG002-CIUDAD");
+    public CiudadForm(String title) {
+        super(title);
     }
 
     @Override

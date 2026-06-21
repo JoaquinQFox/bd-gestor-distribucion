@@ -21,8 +21,8 @@ public class PedidoDetForm extends BaseForm {
 
     private static final int COL_EST_REG = 5;
 
-    public PedidoDetForm() {
-        super("EG016 - PEDIDO DETALLE");
+    public PedidoDetForm(String title) {
+        super(title);
     }
 
     @Override

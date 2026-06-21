@@ -13,8 +13,8 @@ public class TipoClienteForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public TipoClienteForm() {
-        super("EG001 - TIPO CLIENTE");
+    public TipoClienteForm(String title) {
+        super(title);
     }
 
     @Override

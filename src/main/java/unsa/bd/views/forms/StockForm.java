@@ -21,8 +21,8 @@ public class StockForm extends BaseForm {
 
     private static final int COL_EST_REG = 4;
 
-    public StockForm() {
-        super("EG014 - STOCK");
+    public StockForm(String title) {
+        super(title);
     }
 
     @Override

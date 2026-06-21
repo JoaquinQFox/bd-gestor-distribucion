@@ -14,8 +14,8 @@ public class UnidadMedidaForm extends BaseForm {
     private JTextField abrField;
     private JTextField estRegField;
 
-    public UnidadMedidaForm() {
-        super("EG001 - UNIDAD MEDIDA");
+    public UnidadMedidaForm(String title) {
+        super(title);
     }
 
     @Override

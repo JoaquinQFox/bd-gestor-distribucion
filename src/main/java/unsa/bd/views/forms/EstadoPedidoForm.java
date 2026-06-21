@@ -13,8 +13,8 @@ public class EstadoPedidoForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public EstadoPedidoForm() {
-        super("EG001 - ESTADO PEDIDO");
+    public EstadoPedidoForm(String title) {
+        super(title);
     }
 
     @Override

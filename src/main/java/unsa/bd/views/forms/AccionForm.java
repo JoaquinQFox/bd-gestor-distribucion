@@ -14,8 +14,8 @@ public class AccionForm extends BaseForm {
     private JTextField nomField;
     private JTextField estRegField;
 
-    public AccionForm() {
-        super("EG003 - ACCION");
+    public AccionForm(String title) {
+        super(title);
     }
 
     @Override

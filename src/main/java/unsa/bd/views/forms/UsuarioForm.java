@@ -21,8 +21,8 @@ public class UsuarioForm extends BaseForm {
 
     private static final int COL_EST_REG = 5;
 
-    public UsuarioForm() {
-        super("EG003-USUARIO");
+    public UsuarioForm(String title) {
+        super(title);
     }
 
     @Override

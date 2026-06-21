@@ -26,8 +26,8 @@ public class PedidoCabForm extends BaseForm {
     private boolean actualizando = false;
     private static final int COL_EST_REG = 10;
 
-    public PedidoCabForm() {
-        super("EG015 - PEDIDO CABECERA");
+    public PedidoCabForm(String title) {
+        super(title);
     }
 
     @Override

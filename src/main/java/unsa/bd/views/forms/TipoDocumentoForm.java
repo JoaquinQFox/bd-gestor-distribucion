@@ -15,8 +15,8 @@ public class TipoDocumentoForm extends BaseForm {
 
     private static final int COL_EST_REG = 2;
 
-    public TipoDocumentoForm() {
-        super("EG012 - TIPO DOCUMENTO");
+    public TipoDocumentoForm(String title) {
+        super(title);
     }
 
     @Override
