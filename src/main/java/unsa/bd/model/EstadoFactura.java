@@ -1,24 +1,24 @@
 package unsa.bd.model;
 
 public class EstadoFactura {
-    private int estFacCod;
+    private String estFacCod;
     private String estFacNom;
     private String estFacEstReg;
 
     public EstadoFactura() {
     }
 
-    public EstadoFactura(int estFacCod, String estFacNom, String estFacEstReg) {
+    public EstadoFactura(String estFacCod, String estFacNom, String estFacEstReg) {
         this.estFacCod = estFacCod;
         this.estFacNom = estFacNom;
         this.estFacEstReg = estFacEstReg;
     }
 
-    public int getEstFacCod() {
+    public String getEstFacCod() {
         return estFacCod;
     }
 
-    public void setEstFacCod(int estFacCod) {
+    public void setEstFacCod(String estFacCod) {
         this.estFacCod = estFacCod;
     }
 

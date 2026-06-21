@@ -13,10 +13,11 @@ public class EstadoFacturaDAO {
 
     public void agregar(EstadoFactura estFac) throws Exception {
         String sql = """
-                INSERT INTO "ESTADO_FACTURA" ("EstFacNom", "EstFacEstReg") VALUES (?, 'A')""";
+                INSERT INTO "ESTADO_FACTURA" ("EstFacCod", "EstFacNom", "EstFacEstReg") VALUES (?, ?, 'A')""";
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, estFac.getEstFacNom());
+            ps.setString(1, estFac.getEstFacCod());
+            ps.setString(2, estFac.getEstFacNom());
             ps.executeUpdate();
         }
     }
@@ -27,37 +28,37 @@ public class EstadoFacturaDAO {
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, estFac.getEstFacNom());
-            ps.setInt(2, estFac.getEstFacCod());
+            ps.setString(2, estFac.getEstFacCod());
             ps.executeUpdate();
         }
     }
 
-    public void eliminar(int estFacCod) throws Exception {
+    public void eliminar(String estFacCod) throws Exception {
         String sql = """
                 UPDATE "ESTADO_FACTURA" SET "EstFacEstReg" = '*' WHERE "EstFacCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, estFacCod);
+            ps.setString(1, estFacCod);
             ps.executeUpdate();
         }
     }
 
-    public void inactivar(int estFacCod) throws Exception {
+    public void inactivar(String estFacCod) throws Exception {
         String sql = """
                 UPDATE "ESTADO_FACTURA" SET "EstFacEstReg" = 'I' WHERE "EstFacCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, estFacCod);
+            ps.setString(1, estFacCod);
             ps.executeUpdate();
         }
     }
 
-    public void reactivar(int estFacCod) throws Exception {
+    public void reactivar(String estFacCod) throws Exception {
         String sql = """
                 UPDATE "ESTADO_FACTURA" SET "EstFacEstReg" = 'A' WHERE "EstFacCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, estFacCod);
+            ps.setString(1, estFacCod);
             ps.executeUpdate();
         }
     }
@@ -71,7 +72,7 @@ public class EstadoFacturaDAO {
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 EstadoFactura e = new EstadoFactura();
-                e.setEstFacCod(rs.getInt("EstFacCod"));
+                e.setEstFacCod(rs.getString("EstFacCod"));
                 e.setEstFacNom(rs.getString("EstFacNom"));
                 e.setEstFacEstReg(rs.getString("EstFacEstReg"));
                 lista.add(e);
