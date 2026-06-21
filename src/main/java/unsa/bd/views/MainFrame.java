@@ -51,8 +51,7 @@ public class MainFrame extends JFrame {
         sidebar.add(sep);
         sidebar.add(Box.createVerticalStrut(8));
 
-        addItem(sidebar, "Región", () -> openFrame(new RegionForm("GZZ001 - REGION")));
-        addItem(sidebar, "Region nuevo", () -> openFrame(new RegionFormR()));
+        addItem(sidebar, "Region nuevo", () -> openFrame(new RegionForm()));
         addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm()));
         addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("GZZ003 - DEPARTAMENTO")));
         addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("GZZ004 - CARGO")));

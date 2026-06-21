@@ -7,19 +7,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RegionDAO {
 
     public void agregar(Region region) throws Exception {
         String sql = """
-                INSERT INTO "REGION" ("RegNom", "RegEstReg") VALUES (?, 'A')""";
+                INSERT INTO "REGION" ("RegCod", "RegNom", "RegEstReg") VALUES (?, ?, 'A')""";
 
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, region.getRegNom());
+            ps.setString(1, region.getRegCod());
+            ps.setString(2, region.getRegNom());
             ps.executeUpdate();
         }
     }
@@ -31,43 +31,43 @@ public class RegionDAO {
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, region.getRegNom());
-            ps.setInt(2, region.getRegCod());
+            ps.setString(2, region.getRegCod());
 
             ps.executeUpdate();
         }
     }
-    public void eliminar(int regCod) throws Exception {
+    public void eliminar(String regCod) throws Exception {
         String sql = """
                 UPDATE "REGION" SET "RegEstReg" = '*' WHERE "RegCod" = ?""";
 
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, regCod);
+            ps.setString(1, regCod);
             ps.executeUpdate();
         }
     }
 
-    public void inactivar(int regCod) throws Exception {
+    public void inactivar(String regCod) throws Exception {
         String sql = """
                 UPDATE "REGION" SET "RegEstReg" = 'I' WHERE "RegCod" = ?""";
 
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, regCod);
+            ps.setString(1, regCod);
             ps.executeUpdate();
         }
     }
 
-    public void reactivar(int regCod) throws Exception {
+    public void reactivar(String regCod) throws Exception {
         String sql = """
                 UPDATE "REGION" SET "RegEstReg" = 'A' WHERE "RegCod" = ?""";
 
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, regCod);
+            ps.setString(1, regCod);
             ps.executeUpdate();
         }
     }
@@ -83,7 +83,7 @@ public class RegionDAO {
 
             while (rs.next()) {
                 Region r = new Region();
-                r.setRegCod(rs.getInt("RegCod"));
+                r.setRegCod(rs.getString("RegCod"));
                 r.setRegNom(rs.getString("RegNom"));
                 r.setRegEstReg(rs.getString("RegEstReg"));
                 lista.add(r);

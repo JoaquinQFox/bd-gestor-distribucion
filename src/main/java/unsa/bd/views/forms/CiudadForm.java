@@ -12,7 +12,6 @@ import java.util.List;
 
 public class CiudadForm extends BaseForm {
 
-    // ── Campos del formulario ────────────────────────────────────────────────
     private JTextField     codField;
     private JTextField     nomField;
     private JComboBox<Region> regComboBox;
@@ -66,9 +65,9 @@ public class CiudadForm extends BaseForm {
             List<Region> regiones = regDao.listarTodo();
 
             for (Ciudad ciudad : ciudades) {
-                String nomRegion = "Cod: " + ciudad.getCiuRegCod();
+                String nomRegion = "";
                 for (Region r : regiones) {
-                    if (r.getRegCod() == ciudad.getCiuRegCod()) {
+                    if (r.getRegCod().equals(ciudad.getCiuRegCod())) {
                         nomRegion = r.getRegNom();
                         break;
                     }
@@ -87,27 +86,27 @@ public class CiudadForm extends BaseForm {
 
     @Override
     protected void onAdd() throws Exception {
-        new CiudadDAO().agregar(buildCiudadFromFields(0));
+        new CiudadDAO().agregar(buildCiudadFromFields());
     }
 
     @Override
     protected void onModify() throws Exception {
-        new CiudadDAO().modificar(buildCiudadFromFields(getCodFromField()));
+        new CiudadDAO().modificar(buildCiudadFromFields());
     }
 
     @Override
     protected void onDelete() throws Exception {
-        new CiudadDAO().eliminar(getCodFromField());
+        new CiudadDAO().eliminar(buildCiudadFromFields().getCiuCod());
     }
 
     @Override
     protected void onInactivate() throws Exception {
-        new CiudadDAO().inactivar(getCodFromField());
+        new CiudadDAO().inactivar(buildCiudadFromFields().getCiuCod());
     }
 
     @Override
     protected void onReactivate() throws Exception {
-        new CiudadDAO().reactivar(getCodFromField());
+        new CiudadDAO().reactivar(buildCiudadFromFields().getCiuCod());
     }
 
     @Override
@@ -154,16 +153,12 @@ public class CiudadForm extends BaseForm {
         return val != null ? val.toString().trim() : "";
     }
 
-    private int getCodFromField() {
-        String txt = codField.getText().trim();
-        return txt.isEmpty() ? 0 : Integer.parseInt(txt);
-    }
-
-    private Ciudad buildCiudadFromFields(int cod) {
+    private Ciudad buildCiudadFromFields() {
+        String cod    = codField.getText().trim();
         String nom    = nomField.getText().trim();
         String estReg = estRegField.getText().trim();
         Region rSel   = (Region) regComboBox.getSelectedItem();
-        int    regCod = (rSel != null) ? rSel.getRegCod() : 0;
+        String regCod = rSel.getRegCod();
         return new Ciudad(cod, nom, regCod, estReg);
     }
 

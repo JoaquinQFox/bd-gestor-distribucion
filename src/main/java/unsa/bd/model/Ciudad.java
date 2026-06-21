@@ -1,26 +1,26 @@
 package unsa.bd.model;
 
 public class Ciudad {
-    private int ciuCod;
+    private String ciuCod;
     private String ciuNom;
-    private int ciuRegCod;
+    private String ciuRegCod;
     private String ciuEstReg;
 
     public Ciudad() {
     }
 
-    public Ciudad(int ciuCod, String ciuNom, int ciuRegCod, String ciuEstReg) {
+    public Ciudad(String ciuCod, String ciuNom, String ciuRegCod, String ciuEstReg) {
         this.ciuCod = ciuCod;
         this.ciuNom = ciuNom;
         this.ciuRegCod = ciuRegCod;
         this.ciuEstReg = ciuEstReg;
     }
 
-    public int getCiuCod() {
+    public String getCiuCod() {
         return ciuCod;
     }
 
-    public void setCiuCod(int ciuCod) {
+    public void setCiuCod(String ciuCod) {
         this.ciuCod = ciuCod;
     }
 
@@ -32,11 +32,11 @@ public class Ciudad {
         this.ciuNom = ciuNom;
     }
 
-    public int getCiuRegCod() {
+    public String getCiuRegCod() {
         return ciuRegCod;
     }
 
-    public void setCiuRegCod(int ciuRegCod) {
+    public void setCiuRegCod(String ciuRegCod) {
         this.ciuRegCod = ciuRegCod;
     }
 

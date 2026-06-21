@@ -1,24 +1,24 @@
 package unsa.bd.model;
 
 public class Region {
-    private int regCod;
+    private String regCod;
     private String regNom;
     private String regEstReg;
 
     public Region() {
     }
 
-    public Region(int regCod, String regNom, String regEstReg) {
+    public Region(String regCod, String regNom, String regEstReg) {
         this.regCod = regCod;
         this.regNom = regNom;
         this.regEstReg = regEstReg;
     }
 
-    public int getRegCod() {
+    public String getRegCod() {
         return regCod;
     }
 
-    public void setRegCod(int regCod) {
+    public void setRegCod(String regCod) {
         this.regCod = regCod;
     }
 
@@ -36,10 +36,5 @@ public class Region {
 
     public void setRegEstReg(String regEstReg) {
         this.regEstReg = regEstReg;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Region: codigo=%d, nombre=%s, estado=%s", getRegCod(), getRegNom(), getRegEstReg());
     }
 }

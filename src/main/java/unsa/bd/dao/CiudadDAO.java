@@ -13,49 +13,54 @@ import java.util.List;
 public class CiudadDAO {
 
     public void agregar(Ciudad ciudad) throws SQLException {
-        String sql = "INSERT INTO \"CIUDAD\" (\"CiuNom\", \"CiuRegCod\", \"CiuEstReg\") VALUES (?, ?, 'A')";
+        String sql = """
+                INSERT INTO "CIUDAD" ("CiuCod", "CiuNom", "CiuRegCod", "CiuEstReg") VALUES (?, ?, ?, 'A')""";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, ciudad.getCiuNom());
-            ps.setInt(2, ciudad.getCiuRegCod());
+            ps.setString(1, ciudad.getCiuCod());
+            ps.setString(2, ciudad.getCiuNom());
+            ps.setString(3, ciudad.getCiuRegCod());
             ps.executeUpdate();
         }
     }
 
     public void modificar(Ciudad ciudad) throws SQLException {
-        String sql = "UPDATE \"CIUDAD\" SET \"CiuNom\" = ?, \"CiuRegCod\" = ? WHERE \"CiuCod\" = ?";
+        String sql = """
+                UPDATE "CIUDAD" SET "CiuNom" = ?, "CiuRegCod" = ? WHERE "CiuCod" = ?""";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, ciudad.getCiuNom());
-            ps.setInt(2, ciudad.getCiuRegCod());
-            ps.setInt(3, ciudad.getCiuCod());
+            ps.setString(2, ciudad.getCiuRegCod());
+            ps.setString(3, ciudad.getCiuCod());
             ps.executeUpdate();
         }
     }
 
-    public void eliminar(int ciuCod) throws SQLException {
-        String sql = "UPDATE \"CIUDAD\" SET \"CiuEstReg\" = '*' WHERE \"CiuCod\" = ?";
+    public void eliminar(String ciuCod) throws SQLException {
+        String sql = """
+                UPDATE "CIUDAD" SET "CiuEstReg" = '*' WHERE "CiuCod" = ?""";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, ciuCod);
+            ps.setString(1, ciuCod);
             ps.executeUpdate();
         }
     }
 
-    public void inactivar(int ciuCod) throws SQLException {
-        String sql = "UPDATE \"CIUDAD\" SET \"CiuEstReg\" = 'I' WHERE \"CiuCod\" = ?";
+    public void inactivar(String ciuCod) throws SQLException {
+        String sql = """
+                UPDATE "CIUDAD" SET "CiuEstReg" = 'I' WHERE "CiuCod" = ?""";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, ciuCod);
+            ps.setString(1, ciuCod);
             ps.executeUpdate();
         }
     }
 
-    public void reactivar(int ciuCod) throws SQLException {
+    public void reactivar(String ciuCod) throws SQLException {
         String sql = "UPDATE \"CIUDAD\" SET \"CiuEstReg\" = 'A' WHERE \"CiuCod\" = ?";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, ciuCod);
+            ps.setString(1, ciuCod);
             ps.executeUpdate();
         }
     }
@@ -68,9 +73,9 @@ public class CiudadDAO {
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Ciudad ciu = new Ciudad();
-                ciu.setCiuCod(rs.getInt("CiuCod"));
+                ciu.setCiuCod(rs.getString("CiuCod"));
                 ciu.setCiuNom(rs.getString("CiuNom"));
-                ciu.setCiuRegCod(rs.getInt("CiuRegCod"));
+                ciu.setCiuRegCod(rs.getString("CiuRegCod"));
                 ciu.setCiuEstReg(rs.getString("CiuEstReg"));
                 lista.add(ciu);
             }
