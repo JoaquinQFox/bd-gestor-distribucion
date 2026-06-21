@@ -2,6 +2,7 @@ package unsa.bd.views.forms;
 
 import unsa.bd.dao.AccionDAO;
 import unsa.bd.model.Accion;
+import unsa.bd.model.Ciudad;
 import unsa.bd.views.forms.util.FormMode;
 
 import javax.swing.*;
@@ -66,6 +67,7 @@ public class AccionForm extends BaseForm {
     protected void onAdd() throws Exception {
         Accion a = buildFromFields();
         if (a.getAccCod().isEmpty()) throw new Exception("Llenar el campo de código");
+        if (!a.getAccCod().matches("\\d+")) throw new Exception("El campo código solo acepta números");
         new AccionDAO().agregar(buildFromFields());
     }
 

@@ -66,6 +66,7 @@ public class CargoForm extends BaseForm {
     protected void onAdd() throws Exception {
         Cargo c = buildFromFields();
         if (c.getCarCod().isEmpty()) throw new Exception("Llenar el campo de código");
+        if (!c.getCarCod().matches("\\d+")) throw new Exception("El campo código solo acepta números");
         new CargoDAO().agregar(buildFromFields());
     }
 

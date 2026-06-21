@@ -1,24 +1,24 @@
 package unsa.bd.model;
 
 public class Departamento {
-    private int depCod;
+    private String depCod;
     private String depNom;
     private String depEstReg;
 
     public Departamento() {
     }
 
-    public Departamento(int depCod, String depNom, String depEstReg) {
+    public Departamento(String depCod, String depNom, String depEstReg) {
         this.depCod = depCod;
         this.depNom = depNom;
         this.depEstReg = depEstReg;
     }
 
-    public int getDepCod() {
+    public String getDepCod() {
         return depCod;
     }
 
-    public void setDepCod(int depCod) {
+    public void setDepCod(String depCod) {
         this.depCod = depCod;
     }
 
@@ -38,12 +38,7 @@ public class Departamento {
         this.depEstReg = depEstReg;
     }
 
-    @Override
-    public String toString() {
-        return "Departamento{" +
-               "depCod=" + depCod +
-               ", depNom='" + depNom + '\'' +
-               ", depEstReg='" + depEstReg + '\'' +
-               '}';
+    public String cog() {
+        return null;
     }
 }

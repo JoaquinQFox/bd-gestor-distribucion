@@ -86,6 +86,9 @@ public class CiudadForm extends BaseForm {
 
     @Override
     protected void onAdd() throws Exception {
+        Ciudad c = buildCiudadFromFields();
+        if (c.getCiuCod().isEmpty()) throw new Exception("Llenar el campo de código");
+        if (!c.getCiuCod().matches("\\d+")) throw new Exception("El campo código solo acepta números");
         new CiudadDAO().agregar(buildCiudadFromFields());
     }
 

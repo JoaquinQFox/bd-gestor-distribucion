@@ -66,6 +66,7 @@ public class RegionForm extends BaseForm {
     protected void onAdd() throws Exception {
         Region r = buildFromFields();
         if (r.getRegCod().isEmpty()) throw new Exception("Llenar el campo de código");
+        if (!r.getRegCod().matches("\\d+")) throw new Exception("El campo código solo acepta números");
         new RegionDAO().agregar(buildFromFields());
     }
 

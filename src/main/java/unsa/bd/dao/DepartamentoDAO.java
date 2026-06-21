@@ -13,60 +13,66 @@ import java.util.List;
 public class DepartamentoDAO {
 
     public void agregar(Departamento departamento) throws SQLException {
-        String sql = "INSERT INTO \"DEPARTAMENTO\" (\"DepNom\", \"DepEstReg\") VALUES (?, 'A')";
+        String sql = """
+                INSERT INTO "DEPARTAMENTO" ("DepCod", "DepNom", "DepEstReg") VALUES (?, ?, 'A')""";
         try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, departamento.getDepNom());
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, departamento.getDepCod());
+            ps.setString(2, departamento.getDepNom());
             ps.executeUpdate();
         }
     }
 
     public void modificar(Departamento departamento) throws SQLException {
-        String sql = "UPDATE \"DEPARTAMENTO\" SET \"DepNom\" = ? WHERE \"DepCod\" = ?";
+        String sql = """
+                UPDATE "DEPARTAMENTO" SET "DepNom" = ? WHERE "DepCod" = ?""";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, departamento.getDepNom());
-            ps.setInt(2, departamento.getDepCod());
+            ps.setString(2, departamento.getDepCod());
             ps.executeUpdate();
         }
     }
 
-    public void eliminar(int depCod) throws SQLException {
-        String sql = "UPDATE \"DEPARTAMENTO\" SET \"DepEstReg\" = '*' WHERE \"DepCod\" = ?";
+    public void eliminar(String depCod) throws SQLException {
+        String sql = """
+                UPDATE "DEPARTAMENTO" SET "DepEstReg" = '*' WHERE "DepCod" = ?""";
         try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, depCod);
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, depCod);
             ps.executeUpdate();
         }
     }
 
-    public void inactivar(int depCod) throws SQLException {
+    public void inactivar(String depCod) throws SQLException {
         String sql = "UPDATE \"DEPARTAMENTO\" SET \"DepEstReg\" = 'I' WHERE \"DepCod\" = ?";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, depCod);
+            ps.setString(1, depCod);
             ps.executeUpdate();
         }
     }
 
-    public void reactivar(int depCod) throws SQLException {
-        String sql = "UPDATE \"DEPARTAMENTO\" SET \"DepEstReg\" = 'A' WHERE \"DepCod\" = ?";
+    public void reactivar(String depCod) throws SQLException {
+        String sql = """
+                UPDATE "DEPARTAMENTO" SET "DepEstReg" = 'A' WHERE "DepCod" = ?""";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, depCod);
+            ps.setString(1, depCod);
             ps.executeUpdate();
         }
     }
 
     public List<Departamento> listarTodo() throws SQLException {
         List<Departamento> lista = new ArrayList<>();
-        String sql = "SELECT \"DepCod\", \"DepNom\", \"DepEstReg\" FROM \"DEPARTAMENTO\" ORDER BY \"DepCod\" ASC";
+        String sql = """
+                SELECT "DepCod", "DepNom", "DepEstReg" FROM "DEPARTAMENTO" ORDER BY "DepCod" ASC""";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Departamento dep = new Departamento();
-                dep.setDepCod(rs.getInt("DepCod"));
+                dep.setDepCod(rs.getString("DepCod"));
                 dep.setDepNom(rs.getString("DepNom"));
                 dep.setDepEstReg(rs.getString("DepEstReg"));
                 lista.add(dep);
