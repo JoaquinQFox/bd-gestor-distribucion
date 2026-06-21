@@ -1,23 +1,23 @@
 package unsa.bd.model;
 
 public class EstadoPedido {
-    private int estPedCod;
+    private String estPedCod;
     private String estPedNom;
     private String estPedEstReg;
 
     public EstadoPedido() {}
 
-    public EstadoPedido(int estPedCod, String estPedNom, String estPedEstReg) {
+    public EstadoPedido(String estPedCod, String estPedNom, String estPedEstReg) {
         this.estPedCod = estPedCod;
         this.estPedNom = estPedNom;
         this.estPedEstReg = estPedEstReg;
     }
 
-    public int getEstPedCod() {
+    public String getEstPedCod() {
         return estPedCod;
     }
 
-    public void setEstPedCod(int estPedCod) {
+    public void setEstPedCod(String estPedCod) {
         this.estPedCod = estPedCod;
     }
 

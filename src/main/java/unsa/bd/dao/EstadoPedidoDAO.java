@@ -13,51 +13,52 @@ public class EstadoPedidoDAO {
 
     public void agregar(EstadoPedido estPed) throws Exception {
         String sql = """
-                INSERT INTO "ESTADO_PEDIDO" ("EstPedNom", "EstPedEstReg") VALUES (?, 'A')""";
+                INSERT INTO "ESTADO_PEDIDO" ("EstPedCod", "EstPedNom", "EstPedEstReg") VALUES (?, ?, 'A')""";
         try (Connection connection = ConexionDB.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, estPed.getEstPedNom());
+            PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, estPed.getEstPedCod());
+            ps.setString(2, estPed.getEstPedNom());
             ps.executeUpdate();
         }
     }
 
     public void modificar(EstadoPedido estPed) throws Exception {
         String sql = """
-                UPDATE "ESTADO_PEDIDO" SET "EstPedNom" = ? WHERE "EstPedcod" = ?""";
+                UPDATE "ESTADO_PEDIDO" SET "EstPedNom" = ? WHERE "EstPedCod" = ?""";
         try (Connection connection = ConexionDB.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+            PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, estPed.getEstPedNom());
-            ps.setInt(2, estPed.getEstPedCod());
+            ps.setString(2, estPed.getEstPedCod());
             ps.executeUpdate();
         }
     }
 
-    public void eliminar(int estPedCod) throws Exception {
+    public void eliminar(String estPedCod) throws Exception {
         String sql = """
-                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = '*' WHERE "EstPedcod" = ?""";
+                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = '*' WHERE "EstPedCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, estPedCod);
+            PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, estPedCod);
             ps.executeUpdate();
         }
     }
 
-    public void inactivar(int estPedCod) throws Exception {
+    public void inactivar(String estPedCod) throws Exception {
         String sql = """
-                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = 'I' WHERE "EstPedcod" = ?""";
+                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = 'I' WHERE "EstPedCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, estPedCod);
+            ps.setString(1, estPedCod);
             ps.executeUpdate();
         }
     }
 
-    public void reactivar(int estPedCod) throws Exception {
+    public void reactivar(String estPedCod) throws Exception {
         String sql = """
-                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = 'A' WHERE "EstPedcod" = ?""";
+                UPDATE "ESTADO_PEDIDO" SET "EstPedEstReg" = 'A' WHERE "EstPedCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, estPedCod);
+            ps.setString(1, estPedCod);
             ps.executeUpdate();
         }
     }
@@ -65,13 +66,13 @@ public class EstadoPedidoDAO {
     public List<EstadoPedido> listarTodo() throws Exception {
         List<EstadoPedido> lista = new ArrayList<>();
         String sql = """
-                SELECT "EstPedcod", "EstPedNom", "EstPedEstReg" FROM "ESTADO_PEDIDO" ORDER BY "EstPedcod" ASC""";
+                SELECT "EstPedCod", "EstPedNom", "EstPedEstReg" FROM "ESTADO_PEDIDO" ORDER BY "EstPedCod" ASC""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 EstadoPedido e = new EstadoPedido();
-                e.setEstPedCod(rs.getInt("EstPedCod"));
+                e.setEstPedCod(rs.getString("EstPedCod"));
                 e.setEstPedNom(rs.getString("EstPedNom"));
                 e.setEstPedEstReg(rs.getString("EstPedEstReg"));
                 lista.add(e);
@@ -80,11 +81,4 @@ public class EstadoPedidoDAO {
         return lista;
     }
 
-    public static void main(String[] args) throws Exception {
-        EstadoPedidoDAO dao = new EstadoPedidoDAO();
-        List<EstadoPedido> list = dao.listarTodo();
-        for (EstadoPedido e : list) {
-            System.out.println(e);
-        }
-    }
 }
