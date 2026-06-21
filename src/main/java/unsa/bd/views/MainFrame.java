@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm()));
         addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm()));
         addItem(sidebar, "Escala Credito", () -> openFrame(new EscalaCreditoForm()));
-        addItem(sidebar, "Unidad Medida", () -> openFrame(new UnidadMedidaForm("GZZ010 - UNIDAD MEDIDA")));
+        addItem(sidebar, "Unidad Medida", () -> openFrame(new UnidadMedidaForm()));
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;

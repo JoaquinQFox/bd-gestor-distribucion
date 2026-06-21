@@ -14,13 +14,14 @@ public class UnidadMedidaDAO {
 
     public void agregar(UnidadMedida uniMed) throws Exception {
         String sql = """
-                INSERT INTO "UNIDAD_MEDIDA" ("UniMedNom", "UniMedAbr", "UniMedEstReg") VALUES (?, ?, 'A')""";
+                INSERT INTO "UNIDAD_MEDIDA" ("UniMedCod", "UniMedNom", "UniMedAbr", "UniMedEstReg") VALUES (?, ?, ?, 'A')""";
 
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, uniMed.getUniMedNom());
-            ps.setString(2, uniMed.getUniMedAbr());
+            ps.setString(1, uniMed.getUniMedCod());
+            ps.setString(2, uniMed.getUniMedNom());
+            ps.setString(3, uniMed.getUniMedAbr());
             ps.executeUpdate();
         }
     }
@@ -33,43 +34,43 @@ public class UnidadMedidaDAO {
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, uniMed.getUniMedNom());
             ps.setString(2, uniMed.getUniMedAbr());
-            ps.setInt(3, uniMed.getUniMedCod());
+            ps.setString(3, uniMed.getUniMedCod());
 
             ps.executeUpdate();
         }
     }
-    public void eliminar(int uniMedCod) throws Exception {
+    public void eliminar(String uniMedCod) throws Exception {
         String sql = """
                 UPDATE "UNIDAD_MEDIDA" SET "UniMedEstReg" = '*' WHERE "UniMedCod" = ?""";
 
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, uniMedCod);
+            ps.setString(1, uniMedCod);
             ps.executeUpdate();
         }
     }
 
-    public void inactivar(int uniMedCod) throws Exception {
+    public void inactivar(String uniMedCod) throws Exception {
         String sql = """
                 UPDATE "UNIDAD_MEDIDA" SET "UniMedEstReg" = 'I' WHERE "UniMedCod" = ?""";
 
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, uniMedCod);
+            ps.setString(1, uniMedCod);
             ps.executeUpdate();
         }
     }
 
-    public void reactivar(int uniMedCod) throws Exception {
+    public void reactivar(String uniMedCod) throws Exception {
         String sql = """
                 UPDATE "UNIDAD_MEDIDA" SET "UniMedEstReg" = 'A' WHERE "UniMedCod" = ?""";
 
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setInt(1, uniMedCod);
+            ps.setString(1, uniMedCod);
             ps.executeUpdate();
         }
     }
@@ -85,7 +86,7 @@ public class UnidadMedidaDAO {
 
             while (rs.next()) {
                 UnidadMedida u = new UnidadMedida();
-                u.setUniMedCod(rs.getInt("UniMedCod"));
+                u.setUniMedCod(rs.getString("UniMedCod"));
                 u.setUniMedNom(rs.getString("UniMedNom"));
                 u.setUniMedAbr(rs.getString("UniMedAbr"));
                 u.setUniEstReg(rs.getString("UniMedEstReg"));
@@ -93,12 +94,5 @@ public class UnidadMedidaDAO {
             }
         }
         return lista;
-    }
-
-    public static void main(String[] args) throws Exception {
-        UnidadMedida uniMed = new UnidadMedida(0, "Litro", "l", "A");
-        UnidadMedidaDAO dao = new UnidadMedidaDAO();
-
-        dao.agregar(uniMed);
     }
 }

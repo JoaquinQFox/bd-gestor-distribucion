@@ -1,25 +1,26 @@
 package unsa.bd.model;
 
 public class UnidadMedida {
-    private int uniMedCod;
+    private String uniMedCod;
     private String uniMedNom;
     private String uniMedAbr;
     private String uniEstReg;
 
-    public UnidadMedida() {}
+    public UnidadMedida() {
+    }
 
-    public UnidadMedida(int uniMedCod, String uniMedNom, String uniMedAbr, String uniEstReg) {
+    public UnidadMedida(String uniMedCod, String uniMedNom, String uniMedAbr, String uniEstReg) {
         this.uniMedCod = uniMedCod;
         this.uniMedNom = uniMedNom;
         this.uniMedAbr = uniMedAbr;
         this.uniEstReg = uniEstReg;
     }
 
-    public int getUniMedCod() {
+    public String getUniMedCod() {
         return uniMedCod;
     }
 
-    public void setUniMedCod(int uniMedCod) {
+    public void setUniMedCod(String uniMedCod) {
         this.uniMedCod = uniMedCod;
     }
 
