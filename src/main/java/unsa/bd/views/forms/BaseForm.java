@@ -490,6 +490,34 @@ public abstract class BaseForm extends JInternalFrame {
             }
         });
 
+        // Búsqueda incremental al escribir
+        StringBuilder buffer = new StringBuilder();
+        long[] ultimaTecla = {0};
+
+        box.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetterOrDigit(c) && c != ' ') return;
+
+                long ahora = System.currentTimeMillis();
+                // Resetear buffer si pasaron más de 1.5 segundos sin escribir
+                if (ahora - ultimaTecla[0] > 1500) buffer.setLength(0);
+                ultimaTecla[0] = ahora;
+
+                buffer.append(Character.toLowerCase(c));
+                String busqueda = buffer.toString();
+
+                for (int i = 0; i < box.getItemCount(); i++) {
+                    T item = box.getItemAt(i);
+                    if (labelExtractor.apply(item).toLowerCase().startsWith(busqueda)) {
+                        box.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            }
+        });
+
         box.setFont(FIELD_FONT);
         box.setOpaque(true);
         box.setBackground(Color.WHITE);
