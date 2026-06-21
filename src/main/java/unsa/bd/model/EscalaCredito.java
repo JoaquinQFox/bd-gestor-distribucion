@@ -3,25 +3,25 @@ package unsa.bd.model;
 import java.math.BigDecimal;
 
 public class EscalaCredito {
-    private int escCreCod;
+    private String escCreCod;
     private String escCreNom;
     private BigDecimal escCreLimCre;
     private String escCreEstReg;
 
     public EscalaCredito() {}
 
-    public EscalaCredito(int escCreCod, String escCreNom, BigDecimal escCreLimCre, String escCreEstReg) {
+    public EscalaCredito(String escCreCod, String escCreNom, BigDecimal escCreLimCre, String escCreEstReg) {
         this.escCreCod = escCreCod;
         this.escCreNom = escCreNom;
         this.escCreLimCre = escCreLimCre;
         this.escCreEstReg = escCreEstReg;
     }
 
-    public int getEscCreCod() {
+    public String getEscCreCod() {
         return escCreCod;
     }
 
-    public void setEscCreCod(int escCreCod) {
+    public void setEscCreCod(String escCreCod) {
         this.escCreCod = escCreCod;
     }
 

@@ -3,7 +3,6 @@ package unsa.bd.dao;
 import unsa.bd.database.ConexionDB;
 import unsa.bd.model.EscalaCredito;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +13,12 @@ public class EscalaCreditoDAO {
 
     public void agregar(EscalaCredito escCre) throws Exception {
         String sql = """
-                INSERT INTO "ESCALA_CREDITO" ("EscCreNom", "EscCreLimCre", "EscCreEstReg") VALUES (?, ?, 'A')""";
+                INSERT INTO "ESCALA_CREDITO" ("EscCreCod", "EscCreNom", "EscCreLimCre", "EscCreEstReg") VALUES (?, ?, ?, 'A')""";
         try (Connection connection = ConexionDB.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, escCre.getEscCreNom());
-            ps.setBigDecimal(2, escCre.getEscCreLimCre());
+            ps.setString(1, escCre.getEscCreCod());
+            ps.setString(2, escCre.getEscCreNom());
+            ps.setBigDecimal(3, escCre.getEscCreLimCre());
             ps.executeUpdate();
         }
     }
@@ -30,37 +30,37 @@ public class EscalaCreditoDAO {
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, escCre.getEscCreNom());
             ps.setBigDecimal(2, escCre.getEscCreLimCre());
-            ps.setInt(3, escCre.getEscCreCod());
+            ps.setString(3, escCre.getEscCreCod());
             ps.executeUpdate();
         }
     }
 
-    public void eliminar(int escCreCod) throws Exception {
+    public void eliminar(String escCreCod) throws Exception {
         String sql = """
                 UPDATE "ESCALA_CREDITO" SET "EscCreEstReg" = '*' WHERE "EscCreCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, escCreCod);
+            ps.setString(1, escCreCod);
             ps.executeUpdate();
         }
     }
 
-    public void inactivar(int escCreCod) throws Exception {
+    public void inactivar(String escCreCod) throws Exception {
         String sql = """
                 UPDATE "ESCALA_CREDITO" SET "EscCreEstReg" = 'I' WHERE "EscCreCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, escCreCod);
+            ps.setString(1, escCreCod);
             ps.executeUpdate();
         }
     }
 
-    public void reactivar(int escCreCod) throws Exception {
+    public void reactivar(String escCreCod) throws Exception {
         String sql = """
                 UPDATE "ESCALA_CREDITO" SET "EscCreEstReg" = 'A' WHERE "EscCreCod" = ?""";
         try (Connection con = ConexionDB.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, escCreCod);
+            ps.setString(1, escCreCod);
             ps.executeUpdate();
         }
     }
@@ -74,7 +74,7 @@ public class EscalaCreditoDAO {
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 EscalaCredito e = new EscalaCredito();
-                e.setEscCreCod(rs.getInt("EscCreCod"));
+                e.setEscCreCod(rs.getString("EscCreCod"));
                 e.setEscCreNom(rs.getString("EscCreNom"));
                 e.setEscCreLimCre(rs.getBigDecimal("EscCreLimCre"));
                 e.setEscCreEstReg(rs.getString("EscCreEstReg"));
@@ -82,11 +82,5 @@ public class EscalaCreditoDAO {
             }
         }
         return lista;
-    }
-
-    public static void main(String[] args) throws Exception {
-        EscalaCreditoDAO dao = new EscalaCreditoDAO();
-        EscalaCredito esc = new EscalaCredito(0, "Nombre", new BigDecimal("100.00"), "A");
-        dao.agregar(esc);
     }
 }
