@@ -9,6 +9,7 @@ import unsa.bd.model.Almacen;
 import unsa.bd.views.forms.util.FormMode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
@@ -48,6 +49,7 @@ public class CompraCabForm extends BaseForm {
         prvComboBox = makeStyledComboBox(Proveedor::getPrvNom);
         loadProveedoresInComboBox(prvComboBox);
         addFieldRowToForm(form, "Proveedor:", prvComboBox);
+        prvComboBox.setPreferredSize(new Dimension(250, prvComboBox.getPreferredSize().height));
 
         almComboBox = makeStyledComboBox(Almacen::getAlmNom);
         loadAlmacenesInComboBox(almComboBox);

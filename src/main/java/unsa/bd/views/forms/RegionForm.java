@@ -19,7 +19,7 @@ public class RegionForm extends BaseForm {
 
     @Override
     protected String getHeaderTitle() {
-        return "R2-REGION";
+        return "REGION";
     }
 
     @Override

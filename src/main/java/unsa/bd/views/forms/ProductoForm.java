@@ -11,6 +11,7 @@ import unsa.bd.model.UnidadMedida;
 import unsa.bd.views.forms.util.FormMode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class ProductoForm extends BaseForm {
         claComboBox = makeStyledComboBox(ClasificacionProducto::getClaProNom);
         loadClasificacionesInComboBox(claComboBox);
         addFieldRowToForm(form, "Clasificación:", claComboBox);
+        claComboBox.setPreferredSize(new Dimension(250, claComboBox.getPreferredSize().height));
 
         // Unidad de Medida
         uniMedComboBox = makeStyledComboBox(UnidadMedida::getUniMedNom);

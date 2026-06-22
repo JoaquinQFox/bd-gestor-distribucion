@@ -7,6 +7,7 @@ import unsa.bd.model.RepVenta;
 import unsa.bd.views.forms.util.FormMode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class RepVentasForm extends BaseForm {
         carComboBox = makeStyledComboBox(Cargo::getCarNom);
         loadCargosInComboBox(carComboBox);
         addFieldRowToForm(form, "Cargo:", carComboBox);
+        carComboBox.setPreferredSize(new Dimension(250, carComboBox.getPreferredSize().height));
 
         // Objetivo de Venta
         objVenField = makeStyledField(15);

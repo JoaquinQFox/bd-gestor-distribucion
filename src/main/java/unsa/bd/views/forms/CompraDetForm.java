@@ -7,6 +7,7 @@ import unsa.bd.model.Producto;
 import unsa.bd.views.forms.util.FormMode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class CompraDetForm extends BaseForm {
         proComboBox = makeStyledComboBox(Producto::getProDes);
         loadProductosInComboBox(proComboBox);
         addFieldRowToForm(form, "Producto:", proComboBox);
+        proComboBox.setPreferredSize(new Dimension(250, proComboBox.getPreferredSize().height));
 
         canField = makeStyledField(10);
         addFieldRowToForm(form, "Cantidad:", canField);

@@ -9,6 +9,7 @@ import unsa.bd.model.Stock;
 import unsa.bd.views.forms.util.FormMode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 
 public class StockForm extends BaseForm {
@@ -40,6 +41,7 @@ public class StockForm extends BaseForm {
         proComboBox = makeStyledComboBox(Producto::getProDes);
         loadProductosInComboBox(proComboBox);
         addFieldRowToForm(form, "Producto:", proComboBox);
+        proComboBox.setPreferredSize(new Dimension(250, proComboBox.getPreferredSize().height));
 
         almComboBox = makeStyledComboBox(Almacen::getAlmNom);
         loadAlmacenesInComboBox(almComboBox);
