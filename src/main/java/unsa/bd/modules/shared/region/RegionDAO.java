@@ -1,0 +1,102 @@
+package unsa.bd.modules.shared.region;
+
+import unsa.bd.config.ConexionDB;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+public class RegionDAO {
+
+    public void agregar(Region region) throws Exception {
+        String sql = """
+                INSERT INTO "REGION" ("RegCod", "RegNom", "RegEstReg") VALUES (?, ?, 'A')""";
+
+        try (Connection connection = ConexionDB.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, region.getRegCod());
+            ps.setString(2, region.getRegNom());
+            ps.executeUpdate();
+        }
+    }
+
+    public void modificar(Region region) throws Exception {
+        String sql = """
+                UPDATE "REGION" SET "RegNom" = ? WHERE "RegCod" = ?""";
+
+        try (Connection connection = ConexionDB.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, region.getRegNom());
+            ps.setString(2, region.getRegCod());
+
+            ps.executeUpdate();
+        }
+    }
+    public void eliminar(String regCod) throws Exception {
+        String sql = """
+                UPDATE "REGION" SET "RegEstReg" = '*' WHERE "RegCod" = ?""";
+
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, regCod);
+            ps.executeUpdate();
+        }
+    }
+
+    public void inactivar(String regCod) throws Exception {
+        String sql = """
+                UPDATE "REGION" SET "RegEstReg" = 'I' WHERE "RegCod" = ?""";
+
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, regCod);
+            ps.executeUpdate();
+        }
+    }
+
+    public void reactivar(String regCod) throws Exception {
+        String sql = """
+                UPDATE "REGION" SET "RegEstReg" = 'A' WHERE "RegCod" = ?""";
+
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, regCod);
+            ps.executeUpdate();
+        }
+    }
+
+    public List<Region> listarTodo() throws Exception {
+        List<Region> lista = new ArrayList<>();
+        String sql = """
+                SELECT "RegCod", "RegNom", "RegEstReg" FROM "REGION" ORDER BY "RegCod" ASC""";
+
+        try (Connection con = ConexionDB.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Region r = new Region();
+                r.setRegCod(rs.getString("RegCod"));
+                r.setRegNom(rs.getString("RegNom"));
+                r.setRegEstReg(rs.getString("RegEstReg"));
+                lista.add(r);
+            }
+        }
+        return lista;
+    }
+
+    public static void main(String[] args) throws Exception {
+        RegionDAO regionDAO = new RegionDAO();
+
+        List<Region> regiones = regionDAO.listarTodo();
+        Region regionModificada = regiones.getFirst();
+
+        regionDAO.reactivar(regionModificada.getRegCod());
+    }
+}
