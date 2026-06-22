@@ -74,7 +74,7 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Oficina", () -> openFrame(new OficinaForm("D23001 - OFICINA")));
         addItem(sidebar, "Rep. Ventas", () -> openFrame(new RepVentasForm("D23002 - REPRESENTANTE DE VENTAS")));
         addItem(sidebar, "Cargo", () -> openFrame(new CargoForm("D23003 - CARGO")));
-        addItem(sidebar, "Region nuevo", () -> openFrame(new RegionForm("D23004 - REGIÓN")));
+        addItem(sidebar, "Region", () -> openFrame(new RegionForm("D23004 - REGIÓN")));
         addItem(sidebar, "Departamento", () -> openFrame(new DepartamentoForm("D23005 - DEPARTAMENTO")));
         addItem(sidebar, "Ciudad", () -> openFrame(new CiudadForm("D23006 - CIUDAD")));
 
@@ -86,8 +86,7 @@ public class MainFrame extends JFrame {
         addItem(sidebar, "Pedido Det", () -> openFrame(new PedidoDetForm("D33004 - PEDIDO DETALLE")));
         addItem(sidebar, "Estado Factura", () -> openFrame(new EstadoFacturaForm("D33005 - ESTADO FACTURA")));
         addItem(sidebar, "Estado Pedido", () -> openFrame(new EstadoPedidoForm("D33006 - ESTADO PEDIDO")));
-        addItem(sidebar, "Accion", () -> openFrame(new AccionForm("D33007 - ACCIÓN")));
-        addItem(sidebar, "Tipo Factura", () -> openFrame(new TipoFacturaForm("D33008 - TIPO FACTURA")));
+        addItem(sidebar, "Tipo Factura", () -> openFrame(new TipoFacturaForm("D33007 - TIPO FACTURA")));
 
         // INVENTARIO (Subsistema D4)
         addMenuHeader(sidebar, "INVENTARIO");
@@ -104,8 +103,9 @@ public class MainFrame extends JFrame {
         // SEGURIDAD (Subsistema D5)
         addMenuHeader(sidebar, "SEGURIDAD");
         addItem(sidebar, "Usuario", () -> openFrame(new UsuarioForm("D53001 - USUARIO")));
-        addItem(sidebar, "Movimiento Usuario", () -> openFrame(new MovUsuarioForm("D53002 - MOVIMIENTO USUARIO")));
-        addItem(sidebar, "Rol Usuario", () -> openFrame(new RolUsuarioForm("D53003 - ROL USUARIO")));
+        addItem(sidebar, "Rol Usuario", () -> openFrame(new RolUsuarioForm("D53002 - ROL USUARIO")));
+        addItem(sidebar, "Movimiento Usuario", () -> openFrame(new MovUsuarioForm("D53003 - MOVIMIENTO USUARIO")));
+        addItem(sidebar, "Accion", () -> openFrame(new AccionForm("D33004 - ACCIÓN")));
 
         sidebar.add(Box.createVerticalGlue());
         return sidebar;

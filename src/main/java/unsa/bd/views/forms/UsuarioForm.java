@@ -32,7 +32,7 @@ public class UsuarioForm extends BaseForm {
 
     @Override
     protected String[] getColumnNames() {
-        return new String[]{"Código", "Cód. Reporta", "Nombre Usuario", "Contraseña", "Rol", "Est. Reg."};
+        return new String[]{"Código", "Cód. Representante", "Nombre Usuario", "Contraseña", "Rol", "Est. Reg."};
     }
 
     @Override
