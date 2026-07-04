@@ -10,6 +10,7 @@ import unsa.bd.commons.utility.FormMode;
 import javax.swing.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 public class OficinaForm extends BaseForm
 {
@@ -217,7 +218,6 @@ public class OficinaForm extends BaseForm
     // Filtra el ciuComboBox según la región seleccionada
     private void actualizarCiudadesPorRegion() {
         try {
-            System.out.println("Metodo utilizado");
             Region regSel = (Region) regComboBox.getSelectedItem();
 
             CiudadDAO ciudadDAO = new CiudadDAO();
@@ -225,7 +225,7 @@ public class OficinaForm extends BaseForm
 
             ciuComboBox.removeAllItems();
             for (Ciudad c : ciudades) {
-                if (c.getCiuRegCod().equals(regSel.getRegCod()))
+                if (c.getCiuRegCod().equals(Objects.requireNonNull(regSel).getRegCod()))
                     ciuComboBox.addItem(c);
             }
 

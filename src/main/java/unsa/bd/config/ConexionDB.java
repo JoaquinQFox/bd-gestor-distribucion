@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class ConexionDB {
@@ -21,7 +22,14 @@ public class ConexionDB {
             String user = props.getProperty("db.user");
             String  password = props.getProperty("db.password");
 
-            return DriverManager.getConnection(url, user, password);
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            String driver = con.getMetaData().getDatabaseProductName();
+            if (driver.equalsIgnoreCase("MySQL")) {
+                Statement st = con.createStatement();
+                st.execute("SET SESSION sql_mode = CONCAT(@@sql_mode, ',ANSI_QUOTES')");
+            }
+            return con;
         } catch (IOException | SQLException e) {
             System.out.println("Error: " + e.getMessage() + "\n");
             return null;
