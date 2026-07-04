@@ -63,6 +63,9 @@ public class FacturaDetForm extends BaseForm
 
     private void loadProductosInComboBox(JComboBox<Producto> box) {
         try {
+            Producto n = new Producto();
+            n.setProDes("");
+            box.addItem(n);
             for (Producto p : new ProductoDAO().listarTodo()) box.addItem(p);
         } catch (Exception e) {
             System.err.println("Error al cargar productos en FacturaDetForm");

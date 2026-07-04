@@ -10,7 +10,6 @@ import unsa.bd.commons.utility.FormMode;
 import javax.swing.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 
 public class OficinaForm extends BaseForm
 {
@@ -209,9 +208,12 @@ public class OficinaForm extends BaseForm
 
     private void loadRegionesInComboBox(JComboBox<Region> box) {
         try {
+            Region n = new Region();
+            n.setRegNom("");
+            box.addItem(n);
             for (Region r : new RegionDAO().listarTodo()) box.addItem(r);
         } catch (Exception e) {
-            System.err.println("Error al cargar regiones en OficinaForm");
+            System.err.println("Error al cargar regiones en AlmacenForm");
         }
     }
 
@@ -219,16 +221,16 @@ public class OficinaForm extends BaseForm
     private void actualizarCiudadesPorRegion() {
         try {
             Region regSel = (Region) regComboBox.getSelectedItem();
-
-            CiudadDAO ciudadDAO = new CiudadDAO();
-            List<Ciudad> ciudades = ciudadDAO.listarTodo();
-
+            if (regSel == null) return;
+            List<Ciudad> ciudades = new CiudadDAO().listarTodo();
             ciuComboBox.removeAllItems();
+            Ciudad n = new Ciudad();
+            n.setCiuNom("");
+            ciuComboBox.addItem(n);
             for (Ciudad c : ciudades) {
-                if (c.getCiuRegCod().equals(Objects.requireNonNull(regSel).getRegCod()))
+                if (c.getCiuRegCod().equals(regSel.getRegCod()))
                     ciuComboBox.addItem(c);
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al cargar las ciudades de la región");
         }

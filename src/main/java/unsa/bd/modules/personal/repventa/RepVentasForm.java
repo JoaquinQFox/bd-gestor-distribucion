@@ -195,6 +195,9 @@ public class RepVentasForm extends BaseForm
 
     private void loadCargosInComboBox(JComboBox<Cargo> box) {
         try {
+            Cargo n = new Cargo();
+            n.setCarNom("");
+            box.addItem(n);
             for (Cargo c : new CargoDAO().listarTodo()) box.addItem(c);
         } catch (Exception e) {
             System.err.println("Error al cargar cargos en RepVentasForm");

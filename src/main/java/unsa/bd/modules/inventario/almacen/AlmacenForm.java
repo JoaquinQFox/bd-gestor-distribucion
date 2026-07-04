@@ -194,6 +194,9 @@ public class AlmacenForm extends BaseForm
 
     private void loadRegionesInComboBox(JComboBox<Region> box) {
         try {
+            Region n = new Region();
+            n.setRegNom("");
+            box.addItem(n);
             for (Region r : new RegionDAO().listarTodo()) box.addItem(r);
         } catch (Exception e) {
             System.err.println("Error al cargar regiones en AlmacenForm");
@@ -206,6 +209,9 @@ public class AlmacenForm extends BaseForm
             if (regSel == null) return;
             List<Ciudad> ciudades = new CiudadDAO().listarTodo();
             ciuComboBox.removeAllItems();
+            Ciudad n = new Ciudad();
+            n.setCiuNom("");
+            ciuComboBox.addItem(n);
             for (Ciudad c : ciudades) {
                 if (c.getCiuRegCod().equals(regSel.getRegCod()))
                     ciuComboBox.addItem(c);

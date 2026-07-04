@@ -258,6 +258,9 @@ public class MovUsuarioForm extends BaseForm
 
     private void loadAccionesInComboBox(JComboBox<Accion> box) {
         try {
+            Accion n = new Accion();
+            n.setAccNom("");
+            box.addItem(n);
             for (Accion a : new AccionDAO().listarTodo()) {
                 box.addItem(a);
             }

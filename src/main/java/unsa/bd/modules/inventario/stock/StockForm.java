@@ -187,6 +187,9 @@ public class StockForm extends BaseForm
 
     private void loadProductosInComboBox(JComboBox<Producto> box) {
         try {
+            Producto n = new Producto();
+            n.setProDes("");
+            box.addItem(n);
             for (Producto p : new ProductoDAO().listarTodo()) box.addItem(p);
         } catch (Exception e) {
             System.err.println("Error al cargar productos en StockForm");
@@ -195,6 +198,9 @@ public class StockForm extends BaseForm
 
     private void loadAlmacenesInComboBox(JComboBox<Almacen> box) {
         try {
+            Almacen n = new Almacen();
+            n.setAlmNom("");
+            box.addItem(n);
             for (Almacen a : new AlmacenDAO().listarTodo()) box.addItem(a);
         } catch (Exception e) {
             System.err.println("Error al cargar almacenes en StockForm");

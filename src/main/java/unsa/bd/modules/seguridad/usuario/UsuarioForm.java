@@ -184,6 +184,9 @@ public class UsuarioForm extends BaseForm
     }
 
     private void loadRolesInComboBox(JComboBox<RolUsuario> box) {
+        RolUsuario n = new RolUsuario();
+        n.setRolUsuNom("");
+        box.addItem(n);
         try {
             for (RolUsuario r : new RolUsuarioDAO().listarTodo()) {
                 box.addItem(r);

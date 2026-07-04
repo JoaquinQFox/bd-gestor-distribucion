@@ -163,6 +163,9 @@ public class CiudadForm extends BaseForm
 
     private void loadRegionesInComboBox(JComboBox<Region> box) {
         try {
+            Region n = new Region();
+            n.setRegNom("");
+            box.addItem(n);
             for (Region r : new RegionDAO().listarTodo()) box.addItem(r);
         } catch (Exception e) {
             System.err.println("Error al cargar regiones en CiudadForm");

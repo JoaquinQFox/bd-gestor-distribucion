@@ -300,6 +300,9 @@ public class PedidoCabForm extends BaseForm
             if (regSel == null) return;
             List<Ciudad> ciudades = new CiudadDAO().listarTodo();
             ciuComboBox.removeAllItems();
+            Ciudad n = new Ciudad();
+            n.setCiuNom("");
+            ciuComboBox.addItem(n);
             for (Ciudad c : ciudades) {
                 if (c.getCiuRegCod().equals(regSel.getRegCod()))
                     ciuComboBox.addItem(c);
@@ -313,6 +316,9 @@ public class PedidoCabForm extends BaseForm
 
     private void loadClientesInComboBox(JComboBox<Cliente> box) {
         try {
+            Cliente n = new Cliente();
+            n.setCliCod("Elegir cliente");
+            box.addItem(n);
             for (Cliente c : new ClienteDAO().listarTodo()) box.addItem(c);
         } catch (Exception e) {
             System.err.println("Error al cargar clientes en PedidoCabForm");
@@ -321,6 +327,9 @@ public class PedidoCabForm extends BaseForm
 
     private void loadRepVentasInComboBox(JComboBox<RepVenta> box) {
         try {
+            RepVenta n = new RepVenta();
+            n.setRepVenNom("");
+            box.addItem(n);
             for (RepVenta r : new RepVentaDAO().listarTodo()) box.addItem(r);
         } catch (Exception e) {
             System.err.println("Error al cargar rep. ventas en PedidoCabForm");
@@ -329,6 +338,9 @@ public class PedidoCabForm extends BaseForm
 
     private void loadEstadosPedidoInComboBox(JComboBox<EstadoPedido> box) {
         try {
+            EstadoPedido n = new EstadoPedido();
+            n.setEstPedNom("");
+            box.addItem(n);
             for (EstadoPedido e : new EstadoPedidoDAO().listarTodo()) box.addItem(e);
         } catch (Exception e) {
             System.err.println("Error al cargar estados de pedido en PedidoCabForm");

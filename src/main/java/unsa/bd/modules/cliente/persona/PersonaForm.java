@@ -167,6 +167,9 @@ public class PersonaForm extends BaseForm
 
     private void loadTipoDocumentosInComboBox(JComboBox<TipoDocumento> box) {
         try {
+            TipoDocumento n = new TipoDocumento();
+            n.setTipDocNom("");
+            box.addItem(n);
             for (TipoDocumento t : new TipoDocumentoDAO().listarTodo()) box.addItem(t);
         } catch (Exception e) {
             System.err.println("Error al cargar tipos de documento en PersonaForm");

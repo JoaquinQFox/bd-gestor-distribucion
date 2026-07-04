@@ -228,6 +228,9 @@ public class CompraCabForm extends BaseForm
 
     private void loadProveedoresInComboBox(JComboBox<Proveedor> box) {
         try {
+            Proveedor n = new Proveedor();
+            n.setPrvNom("");
+            box.addItem(n);
             for (Proveedor p : new ProveedorDAO().listarTodo()) box.addItem(p);
         } catch (Exception e) {
             System.err.println("Error al cargar proveedores en CompraCabForm");
@@ -236,6 +239,9 @@ public class CompraCabForm extends BaseForm
 
     private void loadAlmacenesInComboBox(JComboBox<Almacen> box) {
         try {
+            Almacen n = new Almacen();
+            n.setAlmNom("");
+            box.addItem(n);
             for (Almacen a : new AlmacenDAO().listarTodo()) box.addItem(a);
         } catch (Exception e) {
             System.err.println("Error al cargar almacenes en CompraCabForm");

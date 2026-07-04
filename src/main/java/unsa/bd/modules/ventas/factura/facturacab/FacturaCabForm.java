@@ -343,6 +343,9 @@ public class FacturaCabForm extends BaseForm
 
     private void loadClientesInComboBox(JComboBox<Cliente> box) {
         try {
+            Cliente n = new Cliente();
+            n.setCliCod("Elegir cliente");
+            box.addItem(n);
             for (Cliente c : new ClienteDAO().listarTodo()) box.addItem(c);
         } catch (Exception e) {
             System.err.println("Error al cargar clientes en FacturaCabForm");
@@ -351,6 +354,9 @@ public class FacturaCabForm extends BaseForm
 
     private void loadRepVentasInComboBox(JComboBox<RepVenta> box) {
         try {
+            RepVenta n = new RepVenta();
+            n.setRepVenNom("");
+            box.addItem(n);
             for (RepVenta r : new RepVentaDAO().listarTodo()) box.addItem(r);
         } catch (Exception e) {
             System.err.println("Error al cargar rep. ventas en FacturaCabForm");
@@ -359,6 +365,9 @@ public class FacturaCabForm extends BaseForm
 
     private void loadPedidosInComboBox(JComboBox<PedidoCab> box) {
         try {
+            PedidoCab n = new PedidoCab();
+            n.setPedCabNum("");
+            box.addItem(n);
             for (PedidoCab p : new PedidoCabDAO().listarTodo()) box.addItem(p);
         } catch (Exception e) {
             System.err.println("Error al cargar pedidos en FacturaCabForm");
@@ -367,6 +376,9 @@ public class FacturaCabForm extends BaseForm
 
     private void loadTiposFacturaInComboBox(JComboBox<TipoFactura> box) {
         try {
+            TipoFactura n = new TipoFactura();
+            n.setTipFacNom("");
+            box.addItem(n);
             for (TipoFactura t : new TipoFacturaDAO().listarTodo()) box.addItem(t);
         } catch (Exception e) {
             System.err.println("Error al cargar tipos de factura en FacturaCabForm");
@@ -375,6 +387,9 @@ public class FacturaCabForm extends BaseForm
 
     private void loadEstadosFacturaInComboBox(JComboBox<EstadoFactura> box) {
         try {
+            EstadoFactura n = new EstadoFactura();
+            n.setEstFacNom("");
+            box.addItem(n);
             for (EstadoFactura e : new EstadoFacturaDAO().listarTodo()) box.addItem(e);
         } catch (Exception e) {
             System.err.println("Error al cargar estados de factura en FacturaCabForm");

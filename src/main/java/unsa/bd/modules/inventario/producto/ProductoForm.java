@@ -226,6 +226,9 @@ public class ProductoForm extends BaseForm
 
     private void loadFabricantesInComboBox(JComboBox<Fabricante> box) {
         try {
+            Fabricante n = new Fabricante();
+            n.setFabNom("");
+            box.addItem(n);
             for (Fabricante f : new FabricanteDAO().listarTodo()) {
                 if (!f.getFabEstReg().equals("*"))
                     box.addItem(f);
@@ -237,6 +240,9 @@ public class ProductoForm extends BaseForm
 
     private void loadClasificacionesInComboBox(JComboBox<ClasificacionProducto> box) {
         try {
+            ClasificacionProducto n = new ClasificacionProducto();
+            n.setClaProNom("");
+            box.addItem(n);
             for (ClasificacionProducto c : new ClasificacionProductoDAO().listarTodo()) {
                 if (!c.getClaProEstReg().equals("*"))
                     box.addItem(c);
@@ -248,6 +254,9 @@ public class ProductoForm extends BaseForm
 
     private void loadUnidadesMedidaInComboBox(JComboBox<UnidadMedida> box) {
         try {
+            UnidadMedida n = new UnidadMedida();
+            n.setUniMedNom("");
+            box.addItem(n);
             for (UnidadMedida u : new UnidadMedidaDAO().listarTodo()) {
                 if (!u.getUniEstReg().equals("*"))
                     box.addItem(u);

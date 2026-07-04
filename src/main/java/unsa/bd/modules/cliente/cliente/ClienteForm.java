@@ -241,6 +241,9 @@ public class ClienteForm extends BaseForm
 
     private void loadRepVentasInComboBox(JComboBox<RepVenta> box) {
         try {
+            RepVenta n = new RepVenta();
+            n.setRepVenNom("");
+            box.addItem(n);
             for (RepVenta r : new RepVentaDAO().listarTodo()) box.addItem(r);
         } catch (Exception e) {
             System.err.println("Error al cargar rep. ventas en ClienteForm");
@@ -249,6 +252,9 @@ public class ClienteForm extends BaseForm
 
     private void loadDepartamentosInComboBox(JComboBox<Departamento> box) {
         try {
+            Departamento n = new Departamento();
+            n.setDepNom("");
+            box.addItem(n);
             for (Departamento d : new DepartamentoDAO().listarTodo()) box.addItem(d);
         } catch (Exception e) {
             System.err.println("Error al cargar departamentos en ClienteForm");
@@ -257,6 +263,9 @@ public class ClienteForm extends BaseForm
 
     private void loadTipoClienteInComboBox(JComboBox<TipoCliente> box) {
         try {
+            TipoCliente n = new TipoCliente();
+            n.setTipCliNom("");
+            box.addItem(n);
             for (TipoCliente t : new TipoClienteDAO().listarTodo()) box.addItem(t);
         } catch (Exception e) {
             System.err.println("Error al cargar tipos de cliente en ClienteForm");
@@ -265,6 +274,9 @@ public class ClienteForm extends BaseForm
 
     private void loadEscalaCreditoInComboBox(JComboBox<EscalaCredito> box) {
         try {
+            EscalaCredito n = new EscalaCredito();
+            n.setEscCreNom("");
+            box.addItem(n);
             for (EscalaCredito e : new EscalaCreditoDAO().listarTodo()) box.addItem(e);
         } catch (Exception e) {
             System.err.println("Error al cargar escalas de crédito en ClienteForm");
