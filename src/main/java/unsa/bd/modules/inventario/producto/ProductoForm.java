@@ -149,25 +149,25 @@ public class ProductoForm extends BaseForm
     @Override
     protected void fillFormFromRow(int row) {
         codField.setText(tableModel.getValueAt(row, 0).toString());
-        desField.setText(tableModel.getValueAt(row, 2).toString());
-        preField.setText(tableModel.getValueAt(row, 3).toString());
+        desField.setText(tableModel.getValueAt(row, 1).toString());
+        preField.setText(tableModel.getValueAt(row, 2).toString());
         estRegField.setText(tableModel.getValueAt(row, COL_EST_REG).toString());
 
-        String nomFab = tableModel.getValueAt(row, 1).toString();
+        String nomFab = tableModel.getValueAt(row, 5).toString();
         for (int i = 0; i < fabComboBox.getItemCount(); i++) {
             if (fabComboBox.getItemAt(i).getFabNom().equals(nomFab)) {
                 fabComboBox.setSelectedIndex(i); break;
             }
         }
 
-        String nomCla = tableModel.getValueAt(row, 4).toString();
+        String nomCla = tableModel.getValueAt(row, 3).toString();
         for (int i = 0; i < claComboBox.getItemCount(); i++) {
             if (claComboBox.getItemAt(i).getClaProNom().equals(nomCla)) {
                 claComboBox.setSelectedIndex(i); break;
             }
         }
 
-        String nomUni = tableModel.getValueAt(row, 5).toString();
+        String nomUni = tableModel.getValueAt(row, 4).toString();
         for (int i = 0; i < uniMedComboBox.getItemCount(); i++) {
             if (uniMedComboBox.getItemAt(i).getUniMedNom().equals(nomUni)) {
                 uniMedComboBox.setSelectedIndex(i); break;
