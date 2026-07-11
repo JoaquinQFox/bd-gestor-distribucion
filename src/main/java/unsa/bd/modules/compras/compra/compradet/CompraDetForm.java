@@ -6,6 +6,8 @@ import unsa.bd.commons.utility.BaseForm;
 import unsa.bd.commons.utility.FormMode;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -44,13 +46,16 @@ public class CompraDetForm extends BaseForm
         proComboBox = makeStyledComboBox(Producto::getProDes);
         loadProductosInComboBox(proComboBox);
         addFieldRowToForm(form, "Producto:", proComboBox);
-        proComboBox.setPreferredSize(new Dimension(250, proComboBox.getPreferredSize().height));
+        proComboBox.setPreferredSize(new Dimension(500, proComboBox.getPreferredSize().height));
+        proComboBox.addActionListener(e -> actualizarPrecioPorProducto());
 
         canField = makeStyledField(10);
         addFieldRowToForm(form, "Cantidad:", canField);
+        canField.getDocument().addDocumentListener(new DocumentListenerTest());
 
         preField = makeStyledField(15);
         addFieldRowToForm(form, "Precio:", preField);
+        preField.getDocument().addDocumentListener(new DocumentListenerTest());
 
         totField = makeStyledField(15);
         addFieldRowToForm(form, "Total:", totField);
@@ -60,6 +65,35 @@ public class CompraDetForm extends BaseForm
 
         return form;
     }
+
+    public class DocumentListenerTest implements DocumentListener {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            actualizarCampoTotal();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            actualizarCampoTotal();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            actualizarCampoTotal();
+        }
+    }
+
+    public void actualizarCampoTotal() {
+        try {
+            BigDecimal cantidad = new BigDecimal(canField.getText().trim());
+            BigDecimal precio = new BigDecimal(preField.getText().trim());
+            BigDecimal total = cantidad.multiply(precio);
+            totField.setText(total.toString());
+        } catch (Exception e) {
+            totField.setText("");
+        }
+    }
+
 
     private void loadProductosInComboBox(JComboBox<Producto> box) {
         try {
@@ -72,15 +106,35 @@ public class CompraDetForm extends BaseForm
         }
     }
 
+    private void actualizarPrecioPorProducto() {
+        if (modo.equals(FormMode.ADD)) {
+            Producto producto = (Producto) proComboBox.getSelectedItem();
+            if (producto != null && producto.getProPre() != null) {
+                preField.setText(producto.getProPre().toString());
+            } else {
+                preField.setText("");
+            }
+        }
+    }
+
     @Override
     protected void loadTableData() {
         CompraDetDAO dao = new CompraDetDAO();
         try {
             List<CompraDet> detalles = dao.listarTodo();
             for (CompraDet d : detalles) {
+                String proDes = "";
+                ProductoDAO proDao = new ProductoDAO();
+                for (Producto p : proDao.listarTodo()) {
+                    if (p.getProCod().equals(d.getComDetProCod())) {
+                        proDes = p.getProDes();
+                        break;
+                    }
+                }
+
                 tableModel.addRow(new Object[]{
                         d.getComDetCabNum(),
-                        d.getComDetProCod(),
+                        proDes,
                         d.getComDetCan(),
                         d.getComDetPre(),
                         d.getComDetTot(),
@@ -144,7 +198,7 @@ public class CompraDetForm extends BaseForm
     @Override
     protected void clearFields() {
         cabNumField.setText("");
-        if (proComboBox.getItemCount() > 0) proComboBox.setSelectedIndex(0);
+        proComboBox.setSelectedIndex(0);
         canField.setText("");
         preField.setText("");
         totField.setText("");
@@ -157,8 +211,7 @@ public class CompraDetForm extends BaseForm
         setFieldEditable(cabNumField, editable && modo.equals(FormMode.ADD));
         setComboEditable(proComboBox, editable && modo.equals(FormMode.ADD));
         setFieldEditable(canField, editable);
-        setFieldEditable(preField, editable);
-        setFieldEditable(totField, editable);
+        setFieldEditable(preField, editable && modo.equals(FormMode.MODIFY));
         setFieldEditable(estRegField, false);
         if (editable && modo.equals(FormMode.ADD))
             estRegField.setText("A");

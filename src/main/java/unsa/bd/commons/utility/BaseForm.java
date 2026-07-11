@@ -364,9 +364,9 @@ public abstract class BaseForm extends JInternalFrame {
                 return;
             }
             fillFormFromRow(row);
+            modo = FormMode.MODIFY;
             setFieldsEditable(true);
             carFlaAct = 1;
-            modo = FormMode.MODIFY;
             modifyButton.setBackground(BUTTON_SELECTED);
         });
 
