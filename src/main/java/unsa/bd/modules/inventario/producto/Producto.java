@@ -79,4 +79,9 @@ public class Producto {
     public void setProEstReg(String proEstReg) {
         this.proEstReg = proEstReg;
     }
+
+    @Override
+    public String toString() {
+        return "Producto: " + proDes;
+    }
 }

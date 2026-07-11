@@ -133,7 +133,7 @@ public class CompraDetForm extends BaseForm
         estRegField.setText(tableModel.getValueAt(row, COL_EST_REG).toString());
 
         String codPro = tableModel.getValueAt(row, 1).toString();
-        for (int i = 0; i < proComboBox.getItemCount(); i++) {
+        for (int i = 1; i < proComboBox.getItemCount(); i++) {
             if (proComboBox.getItemAt(i).getProCod().equals(codPro)) {
                 proComboBox.setSelectedIndex(i);
                 break;

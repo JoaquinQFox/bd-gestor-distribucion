@@ -133,8 +133,9 @@ public class PedidoDetForm extends BaseForm
         estRegField.setText(tableModel.getValueAt(row, COL_EST_REG).toString());
 
         String nomPro = tableModel.getValueAt(row, 1).toString();
-        for (int i = 0; i < proComboBox.getItemCount(); i++) {
-            if (proComboBox.getItemAt(i).getProDes().equals(nomPro)) {
+        for (int i = 1; i < proComboBox.getItemCount(); i++) {
+            if (proComboBox.getItemAt(i).getProCod().equals(nomPro)) {
+                System.out.println("detectado");
                 proComboBox.setSelectedIndex(i); break;
             }
         }
@@ -178,8 +179,7 @@ public class PedidoDetForm extends BaseForm
 
         Producto  pSel = (Producto)  proComboBox.getSelectedItem();
         String proCod  = pSel != null ? pSel.getProCod()   : "";
-
-        int        can = canStr.isEmpty() ? 0 : Integer.parseInt(canStr);
+        int can = canStr.isEmpty() ? 0 : Integer.parseInt(canStr);
 
         return new PedidoDet(cabNum, proCod, can, pre, totStr, estReg);
     }
