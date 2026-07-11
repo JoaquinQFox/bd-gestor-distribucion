@@ -2,9 +2,7 @@ package unsa.bd.commons.utility;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
+import javax.swing.table.*;
 import java.awt.*;
 import java.util.function.Function;
 
@@ -221,10 +219,6 @@ public abstract class BaseForm extends JInternalFrame {
         actualFormRow++;
     }
 
-    protected int[] getColumnWidths() {
-        return null;
-    }
-
     // Tabla
     private JPanel buildTableSection() {
         JPanel wrapper = styledCard();
@@ -244,12 +238,7 @@ public abstract class BaseForm extends JInternalFrame {
 
         configureTableHeader();
         configureTableCellRenderer();
-        int[] widhts = getColumnWidths();
-        if (widhts != null) {
-            for (int i = 0; i < widhts.length; i++) {
-                table.getColumnModel().getColumn(i).setPreferredWidth(widhts[i]);
-            }
-        }
+        autoFitColumnWidths();
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.getViewport().setBackground(Color.WHITE);
@@ -258,6 +247,28 @@ public abstract class BaseForm extends JInternalFrame {
         wrapper.add(scroll, BorderLayout.CENTER);
         return wrapper;
     }
+
+    private void autoFitColumnWidths() {
+    for (int col = 0; col < table.getColumnCount(); col++) {
+        TableColumn column = table.getColumnModel().getColumn(col);
+        int width = 50;
+
+        TableCellRenderer headerRenderer = column.getHeaderRenderer();
+        if (headerRenderer == null) headerRenderer = table.getTableHeader().getDefaultRenderer();
+        Component headerComp = headerRenderer.getTableCellRendererComponent(
+                table, column.getHeaderValue(), false, false, 0, col);
+        width = Math.max(width, headerComp.getPreferredSize().width);
+
+        for (int row = 0; row < table.getRowCount(); row++) {
+            TableCellRenderer cellRenderer = table.getCellRenderer(row, col);
+            Component comp = table.prepareRenderer(cellRenderer, row, col);
+            width = Math.max(width, comp.getPreferredSize().width);
+        }
+
+        column.setPreferredWidth(width + 20);
+    }
+}
+
 
     private void configureTableHeader() {
         JTableHeader header = table.getTableHeader();
