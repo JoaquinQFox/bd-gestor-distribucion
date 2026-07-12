@@ -1,6 +1,9 @@
 package unsa.bd;
 
 import unsa.bd.consultas.ConsultaRegion;
+import unsa.bd.consultas.ConsultaRepVenta;
+import unsa.bd.consultas.ConsultaUniMed;
+import unsa.bd.consultas.ConsultaUsuario;
 import unsa.bd.modules.cliente.cliente.ClienteForm;
 import unsa.bd.modules.cliente.empresa.EmpresaForm;
 import unsa.bd.modules.cliente.escalacredito.EscalaCreditoForm;
@@ -192,7 +195,10 @@ public class MainFrame extends JFrame {
 
         // CONSULTAS
         addMenuHeader(sidebar, "CONSULTAS");
-        addItem(sidebar, "Clientes", () -> openFrame(new ConsultaRegion("D26001")));
+        addItem(sidebar, "Cliente", () -> openFrame(new ConsultaRegion("D26001")));
+        addItem(sidebar, "Unidad Medida", () -> openFrame(new ConsultaUniMed("D26002")));
+        addItem(sidebar, "Rep. Venta", () -> openFrame(new ConsultaRepVenta("D26003")));
+        addItem(sidebar, "Usuario", () -> openFrame(new ConsultaUsuario("D26004")));
 
 
         sidebar.add(Box.createVerticalGlue());
