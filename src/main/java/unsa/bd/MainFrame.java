@@ -36,6 +36,10 @@ import unsa.bd.modules.ventas.factura.tipofactura.TipoFacturaForm;
 import unsa.bd.modules.ventas.pedido.estadopedido.EstadoPedidoForm;
 import unsa.bd.modules.ventas.pedido.pedidocab.PedidoCabForm;
 import unsa.bd.modules.ventas.pedido.pedidodet.PedidoDetForm;
+import unsa.bd.reportes.ReporteEmpresa;
+import unsa.bd.reportes.ReporteEscCre;
+import unsa.bd.reportes.ReporteFabricante;
+import unsa.bd.reportes.ReporteProducto;
 
 import javax.swing.*;
 import java.awt.*;
@@ -188,9 +192,10 @@ public class MainFrame extends JFrame {
 
         // REPORTES
         addMenuHeader(sidebar, "REPORTES");
-//        addItem(sidebar, "Clientes", () -> openFrame(new ConsultaRegion("hola")));
-//        addItem(sidebar, "Clientes", () -> openFrame(new AccionForm("hola")));
-//        addItem(sidebar, "Clientes", () -> openFrame(new AccionForm("hola")));
+        addItem(sidebar, "Fabricante", () -> openFrame(new ReporteFabricante("D27001")));
+        addItem(sidebar, "Escala Credito", () -> openFrame(new ReporteEscCre("D27002")));
+        addItem(sidebar, "Empresa", () -> openFrame(new ReporteEmpresa("D27003")));
+        addItem(sidebar, "Producto", () -> openFrame(new ReporteProducto("D27004")));
 
 
         // CONSULTAS
