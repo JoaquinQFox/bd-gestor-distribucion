@@ -1,5 +1,6 @@
 package unsa.bd;
 
+import unsa.bd.consultas.ConsultaRegion;
 import unsa.bd.modules.cliente.cliente.ClienteForm;
 import unsa.bd.modules.cliente.empresa.EmpresaForm;
 import unsa.bd.modules.cliente.escalacredito.EscalaCreditoForm;
@@ -53,31 +54,40 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 680);
         setLocationRelativeTo(null);
+        
+        buildUI();
 
+        setVisible(true);
+    }
+
+    private void buildUI() {
         JPanel root = new JPanel(new BorderLayout());
 
-        JPanel sidebar = buildSidebar();
+        root.add(buildLeftSidebarPanel(), BorderLayout.WEST);
+        root.add(buildRightSidebarPanel(), BorderLayout.EAST);
+        root.add(buildDesktop(), BorderLayout.CENTER);
 
-        JScrollPane sideBarScroll = new JScrollPane(sidebar);
+        setContentPane(root);
+    }
+
+    private JScrollPane buildLeftSidebarPanel() {
+        JPanel leftSidebar = buildLeftSidebar();
+        JScrollPane sideBarScroll = new JScrollPane(leftSidebar);
         sideBarScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         sideBarScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         sideBarScroll.setBorder(null);
         sideBarScroll.setPreferredSize(new Dimension(196, 0));
         sideBarScroll.getVerticalScrollBar().setUnitIncrement(16);
 
-        root.add(sideBarScroll, BorderLayout.WEST);
-        root.add(buildDesktop(), BorderLayout.CENTER);
-        setContentPane(root);
-
-        setVisible(true);
+        return sideBarScroll;
     }
 
-    private JPanel buildSidebar() {
+    private JPanel buildLeftSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         sidebar.setBackground(BLUE);
 
-        JLabel title = new JLabel("TABLAS");
+        JLabel title = new JLabel("MANTENIMIENTO");
         title.setFont(TITLE_FONT);
         title.setForeground(Color.WHITE);
         title.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -142,6 +152,52 @@ public class MainFrame extends JFrame {
         return sidebar;
     }
 
+    private JScrollPane buildRightSidebarPanel() {
+        JPanel leftSidebar = buildRightSidebar();
+        JScrollPane sideBarScroll = new JScrollPane(leftSidebar);
+        sideBarScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        sideBarScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        sideBarScroll.setBorder(null);
+        sideBarScroll.setPreferredSize(new Dimension(196, 0));
+        sideBarScroll.getVerticalScrollBar().setUnitIncrement(16);
+
+        return sideBarScroll;
+    }
+
+    private JPanel buildRightSidebar() {
+        JPanel sidebar = new JPanel();
+        sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+        sidebar.setBackground(BLUE);
+
+        JLabel title = new JLabel("DATOS");
+        title.setFont(TITLE_FONT);
+        title.setForeground(Color.WHITE);
+        title.setAlignmentX(Component.LEFT_ALIGNMENT);
+        title.setBorder(BorderFactory.createEmptyBorder(20, 16, 16, 16));
+        title.setMaximumSize(new Dimension(Integer.MAX_VALUE, 56));
+        sidebar.add(title);
+
+        JSeparator sep = new JSeparator();
+        sep.setForeground(new Color(255, 255, 255, 60));
+        sep.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+        sidebar.add(sep);
+        sidebar.add(Box.createVerticalStrut(8));
+
+        // REPORTES
+        addMenuHeader(sidebar, "REPORTES");
+//        addItem(sidebar, "Clientes", () -> openFrame(new ConsultaRegion("hola")));
+//        addItem(sidebar, "Clientes", () -> openFrame(new AccionForm("hola")));
+//        addItem(sidebar, "Clientes", () -> openFrame(new AccionForm("hola")));
+
+
+        // CONSULTAS
+        addMenuHeader(sidebar, "CONSULTAS");
+        addItem(sidebar, "Clientes", () -> openFrame(new ConsultaRegion("D26001")));
+
+
+        sidebar.add(Box.createVerticalGlue());
+        return sidebar;
+    }
 
     private void addMenuHeader(JPanel sidebar, String text) {
         sidebar.add(Box.createVerticalStrut(12));
